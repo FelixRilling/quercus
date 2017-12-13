@@ -14,7 +14,7 @@ const Quercus = class {
      * @constructor
      * @param {any} [data=null]
      */
-    constructor(data = null) {
+    constructor(data) {
         this.tree = new TreeLayer(data);
 
         objDefineProperty(this, "depth", 0, false);
@@ -56,7 +56,7 @@ const Quercus = class {
      * @param {any} [data=null]
      * @returns {boolean}
      */
-    set(path = [], data = null) {
+    set(path = [], data) {
         const { target, depth } = resolvePath(this.tree, path, true);
 
         target.data = data;

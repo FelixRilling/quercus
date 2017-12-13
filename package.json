@@ -1,7 +1,7 @@
 {
     "name": "quercus",
-    "version": "v8.0.0",
-    "description": "Tree data structures in JS",
+    "version": "v1.0.0",
+    "description": "Simple and fast tree data structures in JS",
     "main": "dist/quercus.common.js",
     "module": "dist/quercus.esm.js",
     "constants": {
