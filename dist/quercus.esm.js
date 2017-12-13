@@ -8,7 +8,7 @@ const TreeLayer = class extends Map {
 
 const resolvePath = (
     treeLayer,
-    path = [],
+    path,
     createMissingLayers = false,
     depth = 1
 ) => {
@@ -90,21 +90,61 @@ const objDefineProperty = (obj, key, val, enumerable = true, writable = true, co
     configurable,
 });
 
+/**
+ * Quercus main class
+ *
+ * @class
+ */
 const Quercus = class {
-    constructor(data) {
+    /**
+     * Quercus main class constructor
+     *
+     * @constructor
+     * @param {any} [data=null]
+     */
+    constructor(data = null) {
         this.tree = new TreeLayer(data);
 
         objDefineProperty(this, "depth", 0, false);
     }
-    has(path) {
-        return resolvePath(this.tree, path) !== null;
+    /**
+     * Check if a given path exists
+     *
+     * @param {Array<string>} [path=[]]
+     * @param {boolean} [allowEmpty=true] If a layer without data and children should be counted as existing
+     * @returns {boolean}
+     */
+    has(path = [], allowEmpty = true) {
+        const { target } = resolvePath(this.tree, path);
+
+        if (target !== null) {
+            return allowEmpty
+                ? true
+                : target.data !== null || target.size !== 0;
+        } else {
+            return false;
+        }
     }
-    get(path, returnData = true) {
+    /**
+     * Return value of a path
+     *
+     * @param {Array<string>} [path=[]]
+     * @param {boolean} [returnData=true] If only the data of a layer rather than the layer itself should be returned
+     * @returns {any|TreeLayer}
+     */
+    get(path = [], returnData = true) {
         const { target } = resolvePath(this.tree, path);
 
         return returnData ? target.data : target;
     }
-    set(path, data = null) {
+    /**
+     * Sets data of a path
+     *
+     * @param {Array<string>} [path=[]]
+     * @param {any} [data=null]
+     * @returns {boolean}
+     */
+    set(path = [], data = null) {
         const { target, depth } = resolvePath(this.tree, path, true);
 
         if (target !== null) {

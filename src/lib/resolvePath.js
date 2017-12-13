@@ -2,7 +2,7 @@ import TreeLayer from "./treeLayer";
 
 const resolvePath = (
     treeLayer,
-    path = [],
+    path,
     createMissingLayers = false,
     depth = 1
 ) => {
