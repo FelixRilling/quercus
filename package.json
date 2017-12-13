@@ -1,0 +1,58 @@
+{
+    "name": "quercus",
+    "version": "v8.0.0",
+    "description": "Tree data structures in JS",
+    "main": "dist/quercus.common.js",
+    "module": "dist/quercus.esm.js",
+    "constants": {
+        "dirBase": {
+            "input": "./src",
+            "output": "./dist"
+        },
+        "js": {
+            "input": "main.js",
+            "namespace": {
+                "module": "Quercus",
+                "file": "quercus"
+            },
+            "targets": {
+                "browsers": ["Chrome >= 60"]
+            }
+        }
+    },
+    "scripts": {
+        "start": "npm-run-all lint build test",
+        "build": "npm-run-all dev",
+        "dev": "node tasks/jsDev.js",
+        "dist": "node tasks/jsDist.js",
+        "lint": "eslint src/",
+        "test": "jasmine"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FelixRilling/quercus.git"
+    },
+    "keywords": ["tree", "data-structure"],
+    "author": "Felix Rilling",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/FelixRilling/quercus/issues"
+    },
+    "homepage": "https://github.com/FelixRilling/quercus#readme",
+    "dependencies": {
+        "lightdash": "^3.3.0"
+    },
+    "devDependencies": {
+        "babel-core": "^6.26.0",
+        "babel-plugin-external-helpers": "^6.22.0",
+        "babel-preset-env": "^1.6.1",
+        "eslint": "^4.13.1",
+        "jasmine": "^2.8.0",
+        "npm-run-all": "^4.1.2",
+        "rollup": "^0.52.1",
+        "rollup-plugin-babel": "^3.0.2",
+        "rollup-plugin-node-resolve": "^3.0.0",
+        "rollup-plugin-uglify-es": "0.0.1",
+        "uglify-es": "^3.2.2"
+    }
+}
