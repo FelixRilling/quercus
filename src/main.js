@@ -59,14 +59,10 @@ const Quercus = class {
     set(path = [], data = null) {
         const { target, depth } = resolvePath(this.tree, path, true);
 
-        if (target !== null) {
-            target.data = data;
-            this.depth = depth;
+        target.data = data;
+        this.depth = depth;
 
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 };
 

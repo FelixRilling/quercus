@@ -1,6 +1,18 @@
 'use strict';
 
+/**
+ * TreeLayer class
+ *
+ * @class
+ * @extends Map
+ */
 const TreeLayer = class extends Map {
+    /**
+     * Constructor for TreeLayer
+     *
+     * @constructor
+     * @param {any} [data=null]
+     */
     constructor(data = null) {
         super();
 
@@ -8,20 +20,30 @@ const TreeLayer = class extends Map {
     }
 };
 
+/**
+ * Resolves a path of keys in a tree
+ *
+ * @param {TreeLayer} treeLayer
+ * @param {Array<string>} path
+ * @param {boolean} [createMissingLayers=false]
+ * @param {number} [depth=1]
+ * @returns {object}
+ */
 const resolvePath = (
     treeLayer,
     path,
     createMissingLayers = false,
     depth = 1
 ) => {
-    if (path.length === 0) {
-        return null;
-    }
     const currentKey = path[0];
     let result = {
         depth,
-        target: null
+        target: treeLayer
     };
+
+    if (path.length === 0) {
+        return result;
+    }
 
     if (treeLayer.has(currentKey)) {
         result.target = treeLayer.get(currentKey);
@@ -30,10 +52,15 @@ const resolvePath = (
             result.target = new TreeLayer();
             treeLayer.set(currentKey, result.target);
         } else {
-            return null;
+            result.target = null;
+
+            return result;
         }
     }
 
+    /**
+     * If the end of the path is not reached, continue searching inside result
+     */
     if (path.length > 1) {
         result = resolvePath(
             result.target,
@@ -149,14 +176,10 @@ const Quercus = class {
     set(path = [], data = null) {
         const { target, depth } = resolvePath(this.tree, path, true);
 
-        if (target !== null) {
-            target.data = data;
-            this.depth = depth;
+        target.data = data;
+        this.depth = depth;
 
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 };
 
