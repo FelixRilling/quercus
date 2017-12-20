@@ -16,7 +16,9 @@
                 "file": "quercus"
             },
             "targets": {
-                "browsers": ["Chrome >= 60"]
+                "browsers": [
+                    "Chrome >= 60"
+                ]
             }
         }
     },
@@ -32,7 +34,10 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/quercus.git"
     },
-    "keywords": ["tree", "data-structure"],
+    "keywords": [
+        "tree",
+        "data-structure"
+    ],
     "author": "Felix Rilling",
     "license": "MIT",
     "bugs": {
@@ -40,7 +45,7 @@
     },
     "homepage": "https://github.com/FelixRilling/quercus#readme",
     "dependencies": {
-        "lightdash": "^3.3.0"
+        "lightdash": "^3.3.2"
     },
     "devDependencies": {
         "babel-core": "^6.26.0",
@@ -49,8 +54,8 @@
         "eslint": "^4.13.1",
         "jasmine": "^2.8.0",
         "npm-run-all": "^4.1.2",
-        "rollup": "^0.52.1",
-        "rollup-plugin-babel": "^3.0.2",
+        "rollup": "^0.52.3",
+        "rollup-plugin-babel": "^3.0.3",
         "rollup-plugin-node-resolve": "^3.0.0",
         "rollup-plugin-uglify-es": "0.0.1",
         "uglify-es": "^3.2.2"
