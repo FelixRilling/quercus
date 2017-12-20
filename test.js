@@ -7,8 +7,11 @@ const Quercus = require("./dist/quercus.common");
 */
 const q = new Quercus();
 
-q.set(["foo", "bar"], 5);
-q.set(["foo", "bizz"], 12);
-q.set(["bar", "fazz"], 560);
+/* q.setPath(["foo", "bar"], 5);
+q.setPath(["foo", "bizz"], 12);
+q.setPath(["bar", "fazz"], 560); */
+
+q.setPath(["foo"], 1);
+q.setPath(["a", "b", "c"], 5);
 
 console.log(q);
