@@ -41,6 +41,14 @@
  */
 const isInstanceOf = (val, target) => val instanceof target;
 
+/**
+ * Utility class to resolve paths
+ *
+ * @param {TreeNode} target
+ * @param {Array<string>} path
+ * @param {boolean} [createMissing=false]
+ * @returns {object}
+ */
 const resolvePath = (target, path, createMissing = false) => {
     let targetNew;
     let pathNew;
@@ -77,6 +85,7 @@ const resolvePath = (target, path, createMissing = false) => {
  * Quercus main class
  *
  * @class
+ * @extends Map
  */
 const TreeNode = class extends Map {
     /**
@@ -92,9 +101,23 @@ const TreeNode = class extends Map {
             this.setPath(pair[0], pair[1]);
         });
     }
+    /**
+     * Checks if a value is a TreeNode
+     *
+     * @static
+     * @param {any} val
+     * @returns {boolean}
+     */
     static isTreeNode(val) {
         return isInstanceOf(val, TreeNode);
     }
+    /**
+     * Checks if a given path exists
+     *
+     * @param {Array<string>} path
+     * @param {boolean} [onlyValues=true] If only value-ends should be considered truthy. When false, TreeNodes are thruthy too
+     * @returns {boolean}
+     */
     hasPath(path, onlyValues = true) {
         const { target, rest, success } = resolvePath(this, path);
 
@@ -104,17 +127,27 @@ const TreeNode = class extends Map {
             return false;
         }
     }
+    /**
+     * Returns value of a given path
+     *
+     * @param {Array<string>} path
+     * @returns {any}
+     */
     getPath(path) {
         const { target, rest, success } = resolvePath(this, path);
 
         return success && target.has(rest) ? target.get(rest) : null;
     }
+    /**
+     * Sets value of a given path
+     *
+     * @param {Array<string>} path
+     * @param {any} val
+     */
     setPath(path, val) {
         const { target, rest } = resolvePath(this, path, true);
 
         target.set(rest, val);
-
-        return true;
     }
 };
 
