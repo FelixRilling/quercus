@@ -12,18 +12,18 @@ const Quercus = require("quercus");
 // new Quercus([val<any>])
 const tree = new Quercus();
 
-// quercus.set(string[],<any>)
-tree.set(["foo", "bar"], 5); // true
+// quercus.setPath(string[],<any>)
+tree.setPath(["foo", "bar"], 5); // true
 
-// quercus.set(string[],[returnData<boolean>=true])
-tree.get(["foo", "bar"]); // 5
-tree.get(["foo", "bar"], false); // TreeLayer{data: 5}
+// quercus.getPath(string[])
+tree.getPath(["foo", "bar"]); // 5
+tree.getPath(["foo", "bar"], false); // TreeLayer{data: 5}
 
-// quercus.has(string[],[allowEmpty<boolean>=true])
-tree.has(["foo", "bar"]); // true
-tree.has(["foo"]); // true
-tree.has(["foo", "bar"], false); // true
-tree.has(["foo"], false); // false
+// quercus.hasPath(string[],[onlyValues<boolean>=true])
+tree.hasPath(["foo", "bar"]); // true
+tree.hasPath(["foo"]); // false
+tree.hasPath(["foo", "bar"], false); // true
+tree.hasPath(["foo"], false); // true
 ```
 
 ### Example
@@ -33,9 +33,9 @@ const Quercus = require("quercus");
 
 const tree = new Quercus();
 
-tree.set(["foo", "bar"], 5);
-tree.set(["foo", "bizz"], 12);
-tree.set(["bar", "fazz"], 560);
+tree.setPath(["foo", "bar"], 5);
+tree.setPath(["foo", "bizz"], 12);
+tree.setPath(["bar", "fazz"], 560);
 ```
 
 Creates a tree like this:

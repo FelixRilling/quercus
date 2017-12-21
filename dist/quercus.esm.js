@@ -117,10 +117,14 @@ const TreeNode = class extends Map {
      * @returns {boolean}
      */
     hasPath(path, onlyValues = true) {
-        const { target, rest, success } = resolvePath(this, path);
+        const resolved = resolvePath(this, path);
 
-        if (success && target.has(rest)) {
-            return onlyValues ? !TreeNode.isTreeNode(target.get(rest)) : true;
+        if (resolved.success && resolved.target.has(resolved.rest)) {
+            if (onlyValues) {
+                return !TreeNode.isTreeNode(resolved.target.get(resolved.rest));
+            } else {
+                return true;
+            }
         } else {
             return false;
         }
@@ -132,9 +136,11 @@ const TreeNode = class extends Map {
      * @returns {any}
      */
     getPath(path) {
-        const { target, rest, success } = resolvePath(this, path);
+        const resolved = resolvePath(this, path);
 
-        return success && target.has(rest) ? target.get(rest) : null;
+        return resolved.success && resolved.target.has(resolved.rest)
+            ? resolved.target.get(resolved.rest)
+            : null;
     }
     /**
      * Sets value of a given path
@@ -143,9 +149,9 @@ const TreeNode = class extends Map {
      * @param {any} val
      */
     setPath(path, val) {
-        const { target, rest } = resolvePath(this, path, true);
+        const resolved = resolvePath(this, path, true);
 
-        target.set(rest, val);
+        resolved.target.set(resolved.rest, val);
     }
 };
 
