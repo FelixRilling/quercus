@@ -1,4 +1,4 @@
-import { isInstanceOf } from "lightdash";
+import { isInstanceOf } from "lightdash/dist/lightdash.esm";
 
 /**
  * Utility class to resolve paths

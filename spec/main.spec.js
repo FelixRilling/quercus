@@ -47,3 +47,31 @@ describe("Simple", () => {
         expect(q.getPath(["foo", "bar"])).toBe(null);
     });
 });
+
+describe("Normal", () => {
+    const q = new Quercus();
+
+    q.setPath(["foo", "bar"], 5);
+    q.setPath(["foo", "bizz", "buzz"], 12);
+    q.setPath(["bar", "fazz"], 560);
+
+    console.log(q);
+
+    it("Size", () => {
+        expect(q.size).toBe(2);
+    });
+
+    it("Has", () => {
+        expect(q.hasPath(["foo", "bizz", "buzz"])).toBe(true);
+    });
+    it("Get", () => {
+        expect(q.getPath(["foo", "bizz", "buzz"])).toBe(12);
+    });
+
+    it("Has Nonexisting", () => {
+        expect(q.hasPath(["foo", "lorem"])).toBe(false);
+    });
+    it("Get Nonexisting", () => {
+        expect(q.getPath(["foo", "lorem"])).toBe(null);
+    });
+});
