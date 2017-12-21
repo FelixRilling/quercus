@@ -44,17 +44,15 @@ const isInstanceOf = (val, target) => val instanceof target;
 
 const resolvePath = (target, path, createMissing = false) => {
     let targetNew;
+    let pathNew;
     let rest;
     let success = true;
 
-    if (path.length === 0) {
+    if (path.length === 1) {
         targetNew = target;
-        rest = [];
-    } else if (path.length === 1) {
-        targetNew = target;
-        rest = path;
+        rest = path[0];
     } else {
-        if (target.has(path[0])) {
+        if (target.has(path[0]) && TreeNode.isTreeNode(target.get(path[0]))) {
             targetNew = target.get(path[0]);
         } else {
             if (createMissing) {
@@ -65,13 +63,14 @@ const resolvePath = (target, path, createMissing = false) => {
             }
         }
 
-        rest = path.slice(1);
+        pathNew = path.slice(1);
+        rest = pathNew[0];
     }
 
-    if (rest.length > 1) {
-        return resolvePath(targetNew, rest, createMissing);
+    if (path.length > 2 && success) {
+        return resolvePath(targetNew, pathNew, createMissing);
     } else {
-        return { success, rest: rest[0], target: targetNew };
+        return { success, rest, target: targetNew };
     }
 };
 
@@ -97,23 +96,21 @@ const TreeNode = class extends Map {
     static isTreeNode(val) {
         return isInstanceOf(val, TreeNode);
     }
-    hasPath(path = [], onlyValues = true) {
-        const { target, rest, sucess } = resolvePath(this, path);
+    hasPath(path, onlyValues = true) {
+        const { target, rest, success } = resolvePath(this, path);
 
-        if (sucess) {
-            const val = target.get(rest);
-
-            return onlyValues ? !TreeNode.isTreeNode(val) : true;
+        if (success && target.has(rest)) {
+            return onlyValues ? !TreeNode.isTreeNode(target.get(rest)) : true;
         } else {
             return false;
         }
     }
-    getPath(path = []) {
-        const { target, rest, sucess } = resolvePath(this, path);
+    getPath(path) {
+        const { target, rest, success } = resolvePath(this, path);
 
-        return sucess ? target.get(rest) : null;
+        return success && target.has(rest) ? target.get(rest) : null;
     }
-    setPath(path = [], val) {
+    setPath(path, val) {
         const { target, rest } = resolvePath(this, path, true);
 
         target.set(rest, val);
