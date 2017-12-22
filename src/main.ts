@@ -1,4 +1,13 @@
-import { isInstanceOf } from "lightdash/dist/lightdash.esm";
+/* import isInstanceOf from "lightdash/src/is/instanceOf"; */
+
+type pathArr = string[];
+
+interface ITreeNode extends Map<string, any> {}
+interface IResolvedPath {
+    target: ITreeNode;
+    key: string;
+    success: boolean;
+}
 
 /**
  * Utility class to resolve paths
@@ -9,7 +18,11 @@ import { isInstanceOf } from "lightdash/dist/lightdash.esm";
  * @param {boolean} [createMissing=false]
  * @returns {object}
  */
-const resolvePath = (target, path, createMissing = false) => {
+const resolvePath = (
+    target: ITreeNode,
+    path: pathArr,
+    createMissing: boolean = false
+): IResolvedPath => {
     let targetNew;
     let key;
     let success = true;
@@ -45,18 +58,7 @@ const resolvePath = (target, path, createMissing = false) => {
  * @class
  * @extends Map
  */
-const TreeNode = class extends Map {
-    /**
-     * Quercus main class constructor
-     *
-     * @constructor
-     * @param {Array<Array<string>,any>} [pairArr=null] Optional array of path-value pairs to set
-     */
-    constructor(pairArr = []) {
-        super();
-
-        pairArr.forEach(pair => this.setPath(pair[0], pair[1]));
-    }
+const TreeNode = class extends Map<string, any> {
     /**
      * Checks if a value is a TreeNode
      *
@@ -64,8 +66,21 @@ const TreeNode = class extends Map {
      * @param {any} val
      * @returns {boolean}
      */
-    static isTreeNode(val) {
-        return isInstanceOf(val, TreeNode);
+    public static isTreeNode(val: any): boolean {
+        return val instanceof TreeNode;
+    }
+    /**
+     * Quercus main class constructor
+     *
+     * @constructor
+     * @param {Array<Array<string>,any>} [pairArr=null] Optional array of path-value pairs to set
+     */
+    public constructor(pairArr: Array<[pathArr, any]> = []) {
+        super();
+
+        pairArr.forEach((pair: [pathArr, any]) =>
+            this.setPath(pair[0], pair[1])
+        );
     }
     /**
      * Checks if a given path exists
@@ -74,8 +89,13 @@ const TreeNode = class extends Map {
      * @param {boolean} [treeNodesAreTruthy=false]
      * @returns {boolean}
      */
-    hasPath(path, treeNodesAreTruthy = false) {
-        if (path.length === 0) return treeNodesAreTruthy;
+    public hasPath(
+        path: pathArr,
+        treeNodesAreTruthy: boolean = false
+    ): boolean {
+        if (path.length === 0) {
+            return treeNodesAreTruthy;
+        }
 
         const resolved = resolvePath(this, path);
 
@@ -93,8 +113,10 @@ const TreeNode = class extends Map {
      * @param {Array<string>} path
      * @returns {any}
      */
-    getPath(path) {
-        if (path.length === 0) return this;
+    public getPath(path: pathArr): any | null {
+        if (path.length === 0) {
+            return this;
+        }
 
         const resolved = resolvePath(this, path);
 
@@ -108,8 +130,10 @@ const TreeNode = class extends Map {
      * @param {Array<string>} path
      * @param {any} val
      */
-    setPath(path, val) {
-        if (path.length === 0) return null;
+    public setPath(path: pathArr, val: any): any | null {
+        if (path.length === 0) {
+            return null;
+        }
 
         const resolved = resolvePath(this, path, true);
 
