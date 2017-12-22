@@ -13,17 +13,10 @@ const Quercus = require("quercus");
 const tree = new Quercus();
 
 // quercus.setPath(string[],<any>)
-tree.setPath(["foo", "bar"], 5); // true
+tree.setPath(["foo", "bar"], 5); // TreeNode
 
-// quercus.getPath(string[])
 tree.getPath(["foo", "bar"]); // 5
-tree.getPath(["foo", "bar"], false); // TreeLayer{data: 5}
-
-// quercus.hasPath(string[],[onlyValues<boolean>=true])
-tree.hasPath(["foo", "bar"]); // true
-tree.hasPath(["foo"]); // false
-tree.hasPath(["foo", "bar"], false); // true
-tree.hasPath(["foo"], false); // true
+tree.getPath(["foo"]); // TreeNode{"bar": 5}
 ```
 
 ### Example
