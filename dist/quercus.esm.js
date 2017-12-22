@@ -110,16 +110,16 @@ const TreeNode = class extends Map {
      * Checks if a given path exists
      *
      * @param {Array<string>} path
-     * @param {boolean} [onlyValues=true] If only value-ends should be considered truthy. When false, TreeNodes are truthy as well
+     * @param {boolean} [treeNodesAreTruthy=false]
      * @returns {boolean}
      */
-    hasPath(path, onlyValues = true) {
-        if (path.length === 0) return !onlyValues;
+    hasPath(path, treeNodesAreTruthy = false) {
+        if (path.length === 0) return treeNodesAreTruthy;
 
         const resolved = resolvePath(this, path);
 
         if (resolved.success && resolved.target.has(resolved.rest)) {
-            if (onlyValues) {
+            if (!treeNodesAreTruthy) {
                 return !TreeNode.isTreeNode(resolved.target.get(resolved.rest));
             } else {
                 return true;

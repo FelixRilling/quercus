@@ -63,10 +63,10 @@ describe("Normal", () => {
     });
 
     it("Has TreeNode", () => {
-        expect(q.hasPath(["foo", "bizz"], true)).toBe(false);
+        expect(q.hasPath(["foo", "bizz"])).toBe(false);
     });
-    it("Has TreeNode valuesOnly=false", () => {
-        expect(q.hasPath(["foo", "bizz"], false)).toBe(true);
+    it("Has TreeNode treeNodesAreTruthy=true", () => {
+        expect(q.hasPath(["foo", "bizz"], true)).toBe(true);
     });
     it("Get TreeNode", () => {
         expect(Quercus.isTreeNode(q.getPath(["foo", "bizz"]))).toBe(true);
