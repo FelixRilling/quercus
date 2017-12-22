@@ -11,4 +11,4 @@ const q = new Quercus([
     [["bar", "fazz"], 560]
 ]);
 
-console.log(q);
+console.log(q.setPath([], 1));
