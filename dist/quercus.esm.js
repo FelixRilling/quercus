@@ -1,19 +1,20 @@
-/* import isInstanceOf from "lightdash/src/is/instanceOf"; */
 /**
  * Utility class to resolve paths
  *
  * @private
  * @param {TreeNode} target
- * @param {Array<string>} path
+ * @param {any[]} path
  * @param {boolean} [createMissing=false]
  * @returns {object}
  */
 const resolvePath = (target, path, createMissing = false) => {
-    let targetNew;
+    /**
+     * Is assigned to input as default and only changed when the next sub-TreeNode is found
+     */
+    let targetNew = target;
     let key;
     let success = true;
     if (path.length === 1) {
-        targetNew = target;
         key = path[0];
     }
     else {
@@ -44,7 +45,7 @@ const resolvePath = (target, path, createMissing = false) => {
  * @class
  * @extends Map
  */
-const TreeNode = class extends Map {
+class TreeNode extends Map {
     /**
      * Checks if a value is a TreeNode
      *
@@ -59,7 +60,7 @@ const TreeNode = class extends Map {
      * Quercus main class constructor
      *
      * @constructor
-     * @param {Array<Array<string>,any>} [pairArr=null] Optional array of path-value pairs to set
+     * @param { Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
      */
     constructor(pairArr = []) {
         super();
@@ -68,7 +69,7 @@ const TreeNode = class extends Map {
     /**
      * Checks if a given path exists
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @param {boolean} [treeNodesAreTruthy=false]
      * @returns {boolean}
      */
@@ -88,7 +89,7 @@ const TreeNode = class extends Map {
     /**
      * Returns value of a given path
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @returns {any}
      */
     getPath(path) {
@@ -103,7 +104,7 @@ const TreeNode = class extends Map {
     /**
      * Sets value of a given path
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @param {any} val
      */
     setPath(path, val) {
@@ -114,6 +115,6 @@ const TreeNode = class extends Map {
         resolved.target.set(resolved.key, val);
         return resolved.target;
     }
-};
+}
 
 export default TreeNode;

@@ -1,31 +1,35 @@
 var Quercus = (function () {
 'use strict';
 
-/* import isInstanceOf from "lightdash/src/is/instanceOf"; */
 /**
  * Utility class to resolve paths
  *
  * @private
  * @param {TreeNode} target
- * @param {Array<string>} path
+ * @param {any[]} path
  * @param {boolean} [createMissing=false]
  * @returns {object}
  */
 const resolvePath = (target, path, createMissing = false) => {
-    let targetNew;
+    /**
+     * Is assigned to input as default and only changed when the next sub-TreeNode is found
+     */
+    let targetNew = target;
     let key;
     let success = true;
     if (path.length === 1) {
-        targetNew = target;
         key = path[0];
-    } else {
+    }
+    else {
         if (target.has(path[0]) && TreeNode.isTreeNode(target.get(path[0]))) {
             targetNew = target.get(path[0]);
-        } else {
+        }
+        else {
             if (createMissing) {
                 targetNew = new TreeNode();
                 target.set(path[0], targetNew);
-            } else {
+            }
+            else {
                 success = false;
             }
         }
@@ -33,7 +37,8 @@ const resolvePath = (target, path, createMissing = false) => {
     }
     if (path.length > 2 && success) {
         return resolvePath(targetNew, path.slice(1), createMissing);
-    } else {
+    }
+    else {
         return { success, key, target: targetNew };
     }
 };
@@ -43,7 +48,7 @@ const resolvePath = (target, path, createMissing = false) => {
  * @class
  * @extends Map
  */
-const TreeNode = class extends Map {
+class TreeNode extends Map {
     /**
      * Checks if a value is a TreeNode
      *
@@ -58,16 +63,16 @@ const TreeNode = class extends Map {
      * Quercus main class constructor
      *
      * @constructor
-     * @param {Array<Array<string>,any>} [pairArr=null] Optional array of path-value pairs to set
+     * @param { Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
      */
     constructor(pairArr = []) {
         super();
-        pairArr.forEach(pair => this.setPath(pair[0], pair[1]));
+        pairArr.forEach((pair) => this.setPath(pair[0], pair[1]));
     }
     /**
      * Checks if a given path exists
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @param {boolean} [treeNodesAreTruthy=false]
      * @returns {boolean}
      */
@@ -87,7 +92,7 @@ const TreeNode = class extends Map {
     /**
      * Returns value of a given path
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @returns {any}
      */
     getPath(path) {
@@ -95,12 +100,14 @@ const TreeNode = class extends Map {
             return this;
         }
         const resolved = resolvePath(this, path);
-        return resolved.success && resolved.target.has(resolved.key) ? resolved.target.get(resolved.key) : null;
+        return resolved.success && resolved.target.has(resolved.key)
+            ? resolved.target.get(resolved.key)
+            : null;
     }
     /**
      * Sets value of a given path
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @param {any} val
      */
     setPath(path, val) {
@@ -111,7 +118,7 @@ const TreeNode = class extends Map {
         resolved.target.set(resolved.key, val);
         return resolved.target;
     }
-};
+}
 
 return TreeNode;
 

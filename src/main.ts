@@ -1,11 +1,7 @@
 /* import isInstanceOf from "lightdash/src/is/instanceOf"; */
-
-type pathArr = string[];
-
-interface ITreeNode extends Map<string, any> {}
 interface IResolvedPath {
-    target: ITreeNode;
-    key: string;
+    target: TreeNode;
+    key: any;
     success: boolean;
 }
 
@@ -14,21 +10,23 @@ interface IResolvedPath {
  *
  * @private
  * @param {TreeNode} target
- * @param {Array<string>} path
+ * @param {any[]} path
  * @param {boolean} [createMissing=false]
  * @returns {object}
  */
 const resolvePath = (
-    target: ITreeNode,
-    path: pathArr,
+    target: TreeNode,
+    path: any[],
     createMissing: boolean = false
 ): IResolvedPath => {
-    let targetNew;
-    let key;
-    let success = true;
+    /**
+     * Is assigned to input as default and only changed when the next sub-TreeNode is found
+     */
+    let targetNew: TreeNode = target;
+    let key: any;
+    let success: boolean = true;
 
     if (path.length === 1) {
-        targetNew = target;
         key = path[0];
     } else {
         if (target.has(path[0]) && TreeNode.isTreeNode(target.get(path[0]))) {
@@ -58,7 +56,7 @@ const resolvePath = (
  * @class
  * @extends Map
  */
-const TreeNode = class extends Map<string, any> {
+class TreeNode extends Map<any, any> {
     /**
      * Checks if a value is a TreeNode
      *
@@ -73,26 +71,21 @@ const TreeNode = class extends Map<string, any> {
      * Quercus main class constructor
      *
      * @constructor
-     * @param {Array<Array<string>,any>} [pairArr=null] Optional array of path-value pairs to set
+     * @param { Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
      */
-    public constructor(pairArr: Array<[pathArr, any]> = []) {
+    public constructor(pairArr: Array<[any[], any]> = []) {
         super();
 
-        pairArr.forEach((pair: [pathArr, any]) =>
-            this.setPath(pair[0], pair[1])
-        );
+        pairArr.forEach((pair: [any[], any]) => this.setPath(pair[0], pair[1]));
     }
     /**
      * Checks if a given path exists
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @param {boolean} [treeNodesAreTruthy=false]
      * @returns {boolean}
      */
-    public hasPath(
-        path: pathArr,
-        treeNodesAreTruthy: boolean = false
-    ): boolean {
+    public hasPath(path: any[], treeNodesAreTruthy: boolean = false): boolean {
         if (path.length === 0) {
             return treeNodesAreTruthy;
         }
@@ -110,10 +103,10 @@ const TreeNode = class extends Map<string, any> {
     /**
      * Returns value of a given path
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @returns {any}
      */
-    public getPath(path: pathArr): any | null {
+    public getPath(path: any[]): any | null {
         if (path.length === 0) {
             return this;
         }
@@ -127,10 +120,10 @@ const TreeNode = class extends Map<string, any> {
     /**
      * Sets value of a given path
      *
-     * @param {Array<string>} path
+     * @param {any[]} path
      * @param {any} val
      */
-    public setPath(path: pathArr, val: any): any | null {
+    public setPath(path: any[], val: any): TreeNode | null {
         if (path.length === 0) {
             return null;
         }
@@ -141,6 +134,6 @@ const TreeNode = class extends Map<string, any> {
 
         return resolved.target;
     }
-};
+}
 
 export default TreeNode;
