@@ -95,9 +95,7 @@ const TreeNode = class extends Map {
     constructor(pairArr = []) {
         super();
 
-        pairArr.forEach(pair => {
-            this.setPath(pair[0], pair[1]);
-        });
+        pairArr.forEach(pair => this.setPath(pair[0], pair[1]));
     }
     /**
      * Checks if a value is a TreeNode
@@ -113,7 +111,7 @@ const TreeNode = class extends Map {
      * Checks if a given path exists
      *
      * @param {Array<string>} path
-     * @param {boolean} [onlyValues=true] If only value-ends should be considered truthy. When false, TreeNodes are thruthy too
+     * @param {boolean} [onlyValues=true] If only value-ends should be considered truthy. When false, TreeNodes are truthy as well
      * @returns {boolean}
      */
     hasPath(path, onlyValues = true) {
@@ -152,6 +150,8 @@ const TreeNode = class extends Map {
         const resolved = resolvePath(this, path, true);
 
         resolved.target.set(resolved.rest, val);
+
+        return resolved.target;
     }
 };
 

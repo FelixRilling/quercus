@@ -49,3 +49,15 @@ Creates a tree like this:
      |   |      |
      5   12    560
 ```
+
+You could also create the paths in the constructor:
+
+```js
+const Quercus = require("quercus");
+
+const tree = new Quercus([
+    [["foo", "bar"], 5],
+    [["foo", "bizz"], 12],
+    [["bar", "fazz"], 560]
+]);
+```

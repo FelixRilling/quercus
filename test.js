@@ -5,10 +5,10 @@ const Quercus = require("./dist/quercus.common");
 [["foo", "bizz"], 12],
 [["bar", "fazz"], 560]
 */
-const q = new Quercus();
-
-q.setPath(["foo", "bar"], 5);
-q.setPath(["foo", "bizz"], 12);
-q.setPath(["bar", "fazz"], 560);
+const q = new Quercus([
+    [["foo", "bar"], 5],
+    [["foo", "bizz"], 12],
+    [["bar", "fazz"], 560]
+]);
 
 console.log(q);
