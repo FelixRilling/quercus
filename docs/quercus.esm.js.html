@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TreeNode.html">TreeNode</a><ul class='methods'><li data-type='method'><a href="TreeNode.html#.isTreeNode">isTreeNode</a></li><li data-type='method'><a href="TreeNode.html#getPath">getPath</a></li><li data-type='method'><a href="TreeNode.html#hasPath">hasPath</a></li><li data-type='method'><a href="TreeNode.html#setPath">setPath</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Quercus.html">Quercus</a><ul class='methods'><li data-type='method'><a href="Quercus.html#.isQuercus">isQuercus</a></li><li data-type='method'><a href="Quercus.html#getPath">getPath</a></li><li data-type='method'><a href="Quercus.html#hasPath">hasPath</a></li><li data-type='method'><a href="Quercus.html#setPath">setPath</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -42,14 +42,15 @@
  * Utility class to resolve paths
  *
  * @private
- * @param {TreeNode} target
+ * @since 1.0.0
+ * @param {Quercus} target
  * @param {any[]} path
  * @param {boolean} [createMissing=false]
  * @returns {object}
  */
 const resolvePath = (target, path, createMissing = false) => {
     /**
-     * Is assigned to input as default and only changed when the next sub-TreeNode is found
+     * Is assigned to input as default and only changed when the next sub-Quercus is found
      */
     let targetNew = target;
     let key;
@@ -58,12 +59,12 @@ const resolvePath = (target, path, createMissing = false) => {
         key = path[0];
     }
     else {
-        if (target.has(path[0]) &amp;&amp; TreeNode.isTreeNode(target.get(path[0]))) {
+        if (target.has(path[0]) &amp;&amp; Quercus.isQuercus(target.get(path[0]))) {
             targetNew = target.get(path[0]);
         }
         else {
             if (createMissing) {
-                targetNew = new TreeNode();
+                targetNew = new Quercus();
                 target.set(path[0], targetNew);
             }
             else {
@@ -83,24 +84,36 @@ const resolvePath = (target, path, createMissing = false) => {
  * Quercus main class
  *
  * @class
+ * @since 1.0.0
  * @extends Map
  */
-class TreeNode extends Map {
+class Quercus extends Map {
     /**
-     * Checks if a value is a TreeNode
+     * Checks if a value is a Quercus instance
      *
      * @static
+     * @since 1.0.0
      * @param {any} val
      * @returns {boolean}
+     * @example
+     * const q = new Quercus([["foo", bar], 5]);
+     *
+     * Quercus.isQuercus(q) // true
+     * Quercus.isQuercus(q.getPath(["foo"])) // true
+     * Quercus.isQuercus("foo") // false
      */
-    static isTreeNode(val) {
-        return val instanceof TreeNode;
+    static isQuercus(val) {
+        return val instanceof Quercus;
     }
     /**
      * Quercus main class constructor
      *
      * @constructor
-     * @param { Array&lt;Array&lt;any>, any>} [pairArr=[]] Optional array of path-value pairs to set
+     * @since 1.0.0
+     * @param {Array&lt;Array&lt;any>, any>} [pairArr=[]] Optional array of path-value pairs to set
+     * @example
+     * const q = new Quercus(); // Empty tree
+     * const q2 = new Quercus([["foo", bar], 5]); // Tree initalized with a path-value pair
      */
     constructor(pairArr = []) {
         super();
@@ -109,28 +122,51 @@ class TreeNode extends Map {
     /**
      * Checks if a given path exists
      *
+     * @since 1.0.0
      * @param {any[]} path
-     * @param {boolean} [treeNodesAreTruthy=false]
+     * @param {boolean} [quercusNodesAreTruthy=false]
      * @returns {boolean}
+     * @example
+     * const q = new Quercus([
+     *       [["foo", "bar"], 5],
+     *       [["foo", "bizz"], 12],
+     *       [["bar", "fazz"], 560]
+     *   ]);
+     *
+     * q.hasPath(["foo", "bar"]); // true
+     * q.hasPath(["foo"]); // false
+     * q.hasPath(["foo"], false); // true
      */
-    hasPath(path, treeNodesAreTruthy = false) {
+    hasPath(path, quercusNodesAreTruthy = false) {
         if (path.length === 0) {
-            return treeNodesAreTruthy;
+            return quercusNodesAreTruthy;
         }
         const resolved = resolvePath(this, path);
         if (resolved.success &amp;&amp; resolved.target.has(resolved.key)) {
-            if (!treeNodesAreTruthy) {
-                return !TreeNode.isTreeNode(resolved.target.get(resolved.key));
+            if (!quercusNodesAreTruthy) {
+                return !Quercus.isQuercus(resolved.target.get(resolved.key));
             }
             return true;
         }
         return false;
     }
     /**
-     * Returns value of a given path
+     * Returns value of a given path.
+     * If the path could not be found, null is returned
      *
+     * @since 1.0.0
      * @param {any[]} path
-     * @returns {any}
+     * @returns {any|null}
+     * @example
+     * const q = new Quercus([
+     *       [["foo", "bar"], 5],
+     *       [["foo", "bizz"], 12],
+     *       [["bar", "fazz"], 560]
+     *   ]);
+     *
+     * q.getPath(["foo", "bar"]); // 5
+     * q.getPath(["bar"]); // TreeNode{"fazz"=>560}
+     * q.getPath(["lorem"]); // null
      */
     getPath(path) {
         if (path.length === 0) {
@@ -142,10 +178,20 @@ class TreeNode extends Map {
             : null;
     }
     /**
-     * Sets value of a given path
+     * Sets value of a given path.
+     * If the given path is empty, null is returned.
+     * If the value was set successfully, the value's Quercus is returned
      *
+     * @since 1.0.0
      * @param {any[]} path
      * @param {any} val
+     * @returns {Quercus|null}
+     * @example
+     * const q = new Quercus();
+     *
+     * q.setPath(["foo", "bar"], 5); // TreeNode{"bar"=>5}
+     * q.setPath(["bar", "fazz"], 560); // TreeNode{"fazz"=>560}
+     * q.setPath([], "foo"); // null
      */
     setPath(path, val) {
         if (path.length === 0) {
@@ -157,7 +203,7 @@ class TreeNode extends Map {
     }
 }
 
-export default TreeNode;
+export default Quercus;
 </code></pre>
         </article>
     </section>
@@ -170,7 +216,7 @@ export default TreeNode;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.0-dev</a> on Fri Dec 22 2017 13:29:36 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.0-dev</a> on Fri Dec 22 2017 14:02:15 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

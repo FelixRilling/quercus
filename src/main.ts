@@ -1,5 +1,5 @@
 interface IResolvedPath {
-    target: QuercusNode;
+    target: Quercus;
     key: any;
     success: boolean;
 }
@@ -9,34 +9,31 @@ interface IResolvedPath {
  *
  * @private
  * @since 1.0.0
- * @param {QuercusNode} target
+ * @param {Quercus} target
  * @param {any[]} path
  * @param {boolean} [createMissing=false]
  * @returns {object}
  */
 const resolvePath = (
-    target: QuercusNode,
+    target: Quercus,
     path: any[],
     createMissing: boolean = false
 ): IResolvedPath => {
     /**
-     * Is assigned to input as default and only changed when the next sub-QuercusNode is found
+     * Is assigned to input as default and only changed when the next sub-Quercus is found
      */
-    let targetNew: QuercusNode = target;
+    let targetNew: Quercus = target;
     let key: any;
     let success: boolean = true;
 
     if (path.length === 1) {
         key = path[0];
     } else {
-        if (
-            target.has(path[0]) &&
-            QuercusNode.isQuercusNode(target.get(path[0]))
-        ) {
+        if (target.has(path[0]) && Quercus.isQuercus(target.get(path[0]))) {
             targetNew = target.get(path[0]);
         } else {
             if (createMissing) {
-                targetNew = new QuercusNode();
+                targetNew = new Quercus();
                 target.set(path[0], targetNew);
             } else {
                 success = false;
@@ -60,7 +57,7 @@ const resolvePath = (
  * @since 1.0.0
  * @extends Map
  */
-class QuercusNode extends Map<any, QuercusNode | any> {
+class Quercus extends Map<any, Quercus | any> {
     /**
      * Checks if a value is a Quercus instance
      *
@@ -71,19 +68,19 @@ class QuercusNode extends Map<any, QuercusNode | any> {
      * @example
      * const q = new Quercus([["foo", bar], 5]);
      *
-     * Quercus.isQuercusNode(q) // true
-     * Quercus.isQuercusNode(q.getPath(["foo"])) // true
-     * Quercus.isQuercusNode("foo") // false
+     * Quercus.isQuercus(q) // true
+     * Quercus.isQuercus(q.getPath(["foo"])) // true
+     * Quercus.isQuercus("foo") // false
      */
-    public static isQuercusNode(val: any): boolean {
-        return val instanceof QuercusNode;
+    public static isQuercus(val: any): boolean {
+        return val instanceof Quercus;
     }
     /**
-     * QuercusNode main class constructor
+     * Quercus main class constructor
      *
      * @constructor
      * @since 1.0.0
-     * @param { Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
+     * @param {Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
      * @example
      * const q = new Quercus(); // Empty tree
      * const q2 = new Quercus([["foo", bar], 5]); // Tree initalized with a path-value pair
@@ -123,9 +120,7 @@ class QuercusNode extends Map<any, QuercusNode | any> {
 
         if (resolved.success && resolved.target.has(resolved.key)) {
             if (!quercusNodesAreTruthy) {
-                return !QuercusNode.isQuercusNode(
-                    resolved.target.get(resolved.key)
-                );
+                return !Quercus.isQuercus(resolved.target.get(resolved.key));
             }
             return true;
         }
@@ -163,12 +158,12 @@ class QuercusNode extends Map<any, QuercusNode | any> {
     /**
      * Sets value of a given path.
      * If the given path is empty, null is returned.
-     * If the value was set successfully, the value's QuercusNode is returned
+     * If the value was set successfully, the value's Quercus is returned
      *
      * @since 1.0.0
      * @param {any[]} path
      * @param {any} val
-     * @returns {QuercusNode|null}
+     * @returns {Quercus|null}
      * @example
      * const q = new Quercus();
      *
@@ -176,7 +171,7 @@ class QuercusNode extends Map<any, QuercusNode | any> {
      * q.setPath(["bar", "fazz"], 560); // TreeNode{"fazz"=>560}
      * q.setPath([], "foo"); // null
      */
-    public setPath(path: any[], val: any): QuercusNode | null {
+    public setPath(path: any[], val: any): Quercus | null {
         if (path.length === 0) {
             return null;
         }
@@ -189,4 +184,4 @@ class QuercusNode extends Map<any, QuercusNode | any> {
     }
 }
 
-export default QuercusNode;
+export default Quercus;

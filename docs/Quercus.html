@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>TreeNode - Documentation</title>
+    <title>Quercus - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -23,12 +23,12 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TreeNode.html">TreeNode</a><ul class='methods'><li data-type='method'><a href="TreeNode.html#.isTreeNode">isTreeNode</a></li><li data-type='method'><a href="TreeNode.html#getPath">getPath</a></li><li data-type='method'><a href="TreeNode.html#hasPath">hasPath</a></li><li data-type='method'><a href="TreeNode.html#setPath">setPath</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Quercus.html">Quercus</a><ul class='methods'><li data-type='method'><a href="Quercus.html#.isQuercus">isQuercus</a></li><li data-type='method'><a href="Quercus.html#getPath">getPath</a></li><li data-type='method'><a href="Quercus.html#hasPath">hasPath</a></li><li data-type='method'><a href="Quercus.html#setPath">setPath</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
     
-    <h1 class="page-title">TreeNode</h1>
+    <h1 class="page-title">Quercus</h1>
     
 
     
@@ -41,7 +41,7 @@
 <header>
     
         <h2>
-        TreeNode
+        Quercus
         </h2>
         
             <div class="class-description">Quercus main class</div>
@@ -58,7 +58,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="TreeNode"><span class="type-signature"></span>new TreeNode<span class="signature">(pairArr<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Quercus"><span class="type-signature"></span>new Quercus<span class="signature">(pairArr<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -70,12 +70,15 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line65">line 65</a>
+        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0.0</li></ul></dd>
     
 
     
@@ -119,6 +122,12 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const q = new Quercus(); // Empty tree
+const q2 = new Quercus([["foo", bar], 5]); // Tree initalized with a path-value pair</code></pre>
 
 
 
@@ -240,7 +249,7 @@
 
     
 
-    <h4 class="name" id=".isTreeNode"><span class="type-signature">(static) </span>isTreeNode<span class="signature">(val)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id=".isQuercus"><span class="type-signature">(static) </span>isQuercus<span class="signature">(val)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
@@ -252,12 +261,15 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line56">line 56</a>
+        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line65">line 65</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0.0</li></ul></dd>
     
 
     
@@ -292,7 +304,7 @@
 
 
 <div class="description">
-    Checks if a value is a TreeNode
+    Checks if a value is a Quercus instance
 </div>
 
 
@@ -301,6 +313,15 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const q = new Quercus([["foo", bar], 5]);
+
+Quercus.isQuercus(q) // true
+Quercus.isQuercus(q.getPath(["foo"])) // true
+Quercus.isQuercus("foo") // false</code></pre>
 
 
 
@@ -391,7 +412,7 @@
 
     
 
-    <h4 class="name" id="getPath"><span class="type-signature"></span>getPath<span class="signature">(path)</span><span class="type-signature"> &rarr; {any}</span></h4>
+    <h4 class="name" id="getPath"><span class="type-signature"></span>getPath<span class="signature">(path)</span><span class="type-signature"> &rarr; {any|null}</span></h4>
 
     
 
@@ -403,12 +424,15 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line95">line 95</a>
+        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line131">line 131</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0.0</li></ul></dd>
     
 
     
@@ -443,7 +467,8 @@
 
 
 <div class="description">
-    Returns value of a given path
+    Returns value of a given path.
+If the path could not be found, null is returned
 </div>
 
 
@@ -452,6 +477,19 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const q = new Quercus([
+      [["foo", "bar"], 5],
+      [["foo", "bizz"], 12],
+      [["bar", "fazz"], 560]
+  ]);
+
+q.getPath(["foo", "bar"]); // 5
+q.getPath(["bar"]); // TreeNode{"fazz"=>560}
+q.getPath(["lorem"]); // null</code></pre>
 
 
 
@@ -529,6 +567,9 @@
     <dd>
         
 <span class="param-type">any</span>
+|
+
+<span class="param-type">null</span>
 
 
     </dd>
@@ -542,7 +583,7 @@
 
     
 
-    <h4 class="name" id="hasPath"><span class="type-signature"></span>hasPath<span class="signature">(path, treeNodesAreTruthy<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="hasPath"><span class="type-signature"></span>hasPath<span class="signature">(path, quercusNodesAreTruthy<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
@@ -554,12 +595,15 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line76">line 76</a>
+        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0.0</li></ul></dd>
     
 
     
@@ -603,6 +647,19 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const q = new Quercus([
+      [["foo", "bar"], 5],
+      [["foo", "bizz"], 12],
+      [["bar", "fazz"], 560]
+  ]);
+
+q.hasPath(["foo", "bar"]); // true
+q.hasPath(["foo"]); // false
+q.hasPath(["foo"], false); // true</code></pre>
 
 
 
@@ -671,7 +728,7 @@
 
         <tr>
             
-                <td class="name"><code>treeNodesAreTruthy</code></td>
+                <td class="name"><code>quercusNodesAreTruthy</code></td>
             
 
             <td class="type">
@@ -748,7 +805,7 @@
 
     
 
-    <h4 class="name" id="setPath"><span class="type-signature"></span>setPath<span class="signature">(path, val)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setPath"><span class="type-signature"></span>setPath<span class="signature">(path, val)</span><span class="type-signature"> &rarr; {<a href="Quercus.html">Quercus</a>|null}</span></h4>
 
     
 
@@ -760,12 +817,15 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line110">line 110</a>
+        <a href="quercus.esm.js.html">quercus.esm.js</a>, <a href="quercus.esm.js.html#line156">line 156</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0.0</li></ul></dd>
     
 
     
@@ -800,7 +860,9 @@
 
 
 <div class="description">
-    Sets value of a given path
+    Sets value of a given path.
+If the given path is empty, null is returned.
+If the value was set successfully, the value's Quercus is returned
 </div>
 
 
@@ -809,6 +871,15 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const q = new Quercus();
+
+q.setPath(["foo", "bar"], 5); // TreeNode{"bar"=>5}
+q.setPath(["bar", "fazz"], 560); // TreeNode{"fazz"=>560}
+q.setPath([], "foo"); // null</code></pre>
 
 
 
@@ -897,6 +968,27 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Quercus.html">Quercus</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
         
@@ -917,7 +1009,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.0-dev</a> on Fri Dec 22 2017 13:29:36 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.0-dev</a> on Fri Dec 22 2017 14:02:15 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

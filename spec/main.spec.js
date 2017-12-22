@@ -62,14 +62,14 @@ describe("Normal", () => {
         expect(q.size).toBe(2);
     });
 
-    it("Has QuercusNode", () => {
+    it("Has Quercus", () => {
         expect(q.hasPath(["foo", "bizz"])).toBe(false);
     });
-    it("Has QuercusNode quercusNodesAreTruthy=true", () => {
+    it("Has Quercus quercusNodesAreTruthy=true", () => {
         expect(q.hasPath(["foo", "bizz"], true)).toBe(true);
     });
-    it("Get QuercusNode", () => {
-        expect(Quercus.isQuercusNode(q.getPath(["foo", "bizz"]))).toBe(true);
+    it("Get Quercus", () => {
+        expect(Quercus.isQuercus(q.getPath(["foo", "bizz"]))).toBe(true);
     });
 
     it("Has", () => {

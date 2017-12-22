@@ -1,23 +1,13 @@
 # Quercus
 
-> Simple and fast tree data structures in JS
+> Simple and dynamic tree data structures in JavaScript
+
+Quercus allows you to create tree data structures of any size and depth.
+This library is written in TypeScript.
 
 ## Usage
 
-### API
-
-```js
-const Quercus = require("quercus");
-
-// new Quercus([val<any>])
-const tree = new Quercus();
-
-// quercus.setPath(string[],<any>)
-tree.setPath(["foo", "bar"], 5); // TreeNode
-
-tree.getPath(["foo", "bar"]); // 5
-tree.getPath(["foo"]); // TreeNode{"bar": 5}
-```
+Check the docs here: TODO
 
 ### Example
 
