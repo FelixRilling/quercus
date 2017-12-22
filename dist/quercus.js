@@ -124,7 +124,7 @@ class Quercus extends Map {
      *   ]);
      *
      * q.getPath(["foo", "bar"]); // 5
-     * q.getPath(["bar"]); // TreeNode{"fazz"=>560}
+     * q.getPath(["bar"]); // Quercus{"fazz"=>560}
      * q.getPath(["lorem"]); // null
      */
     getPath(path) {
@@ -137,7 +137,7 @@ class Quercus extends Map {
     /**
      * Sets value of a given path.
      * If the given path is empty, null is returned.
-     * If the value was set successfully, the value's Quercus is returned
+     * If the value was set successfully, the value's Node is returned
      *
      * @since 1.0.0
      * @param {any[]} path
@@ -146,8 +146,8 @@ class Quercus extends Map {
      * @example
      * const q = new Quercus();
      *
-     * q.setPath(["foo", "bar"], 5); // TreeNode{"bar"=>5}
-     * q.setPath(["bar", "fazz"], 560); // TreeNode{"fazz"=>560}
+     * q.setPath(["foo", "bar"], 5); // Quercus{"bar"=>5}
+     * q.setPath(["bar", "fazz"], 560); // Quercus{"fazz"=>560}
      * q.setPath([], "foo"); // null
      */
     setPath(path, val) {

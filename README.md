@@ -2,8 +2,7 @@
 
 > Simple and dynamic tree data structures in JavaScript
 
-Quercus allows you to create tree data structures of any size and depth.
-This library is written in TypeScript.
+Quercus allows you to create tree data structures of any size and depth. This library is written in TypeScript. The `Quercus` class extends `Map`, meaning you can use methods like `forEach` or `values` on it. Even though the examples use strings as path items, any data type accepted as a Map key can be used
 
 ## Usage
 
@@ -36,7 +35,7 @@ Creates a tree like this:
 You could also create the paths in the constructor:
 
 ```js
-const Quercus = require("quercus");
+const Quercus = require("quercus"); // Or `import Quercus from "quercus";` If you use ES modules
 
 const tree = new Quercus([
     [["foo", "bar"], 5],
