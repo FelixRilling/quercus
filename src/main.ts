@@ -127,11 +127,11 @@ class Quercus extends Map<any, Quercus | any> {
             return quercusNodesAreTruthy;
         }
 
-        const resolved = resolvePath(this, path);
+        const { target, key, success } = resolvePath(this, path);
 
-        if (resolved.success && resolved.target.has(resolved.key)) {
+        if (success && target.has(key)) {
             if (!quercusNodesAreTruthy) {
-                return !Quercus.isQuercus(resolved.target.get(resolved.key));
+                return !Quercus.isQuercus(target.get(key));
             }
             return true;
         }
@@ -160,11 +160,9 @@ class Quercus extends Map<any, Quercus | any> {
             return this;
         }
 
-        const resolved = resolvePath(this, path);
+        const { target, key, success } = resolvePath(this, path);
 
-        return resolved.success && resolved.target.has(resolved.key)
-            ? resolved.target.get(resolved.key)
-            : null;
+        return success && target.has(key) ? target.get(key) : null;
     }
     /**
      * Sets value of a given path.
@@ -187,11 +185,11 @@ class Quercus extends Map<any, Quercus | any> {
             return null;
         }
 
-        const resolved = resolvePath(this, path, true);
+        const { target, key } = resolvePath(this, path, true);
 
-        resolved.target.set(resolved.key, val);
+        target.set(key, val);
 
-        return resolved.target;
+        return target;
     }
 }
 
