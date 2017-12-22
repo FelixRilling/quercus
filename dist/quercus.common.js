@@ -52,7 +52,6 @@ const isInstanceOf = (val, target) => val instanceof target;
  */
 const resolvePath = (target, path, createMissing = false) => {
     let targetNew;
-    let pathNew;
     let rest;
     let success = true;
 
@@ -71,12 +70,11 @@ const resolvePath = (target, path, createMissing = false) => {
             }
         }
 
-        pathNew = path.slice(1);
-        rest = pathNew[0];
+        rest = path[1];
     }
 
     if (path.length > 2 && success) {
-        return resolvePath(targetNew, pathNew, createMissing);
+        return resolvePath(targetNew, path.slice(1), createMissing);
     } else {
         return { success, rest, target: targetNew };
     }
