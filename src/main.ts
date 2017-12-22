@@ -15,26 +15,26 @@ interface IResolvedPath {
  * @returns {object}
  */
 const resolvePath = (
-    target: Quercus,
+    targetOld: Quercus,
     path: any[],
     createMissing: boolean = false
 ): IResolvedPath => {
-    /**
-     * Is assigned to input as default and only changed when the next sub-Quercus is found
-     */
-    let targetNew: Quercus = target;
+    let target: Quercus = targetOld;
     let key: any;
     let success: boolean = true;
 
     if (path.length === 1) {
         key = path[0];
     } else {
-        if (target.has(path[0]) && Quercus.isQuercus(target.get(path[0]))) {
-            targetNew = target.get(path[0]);
+        if (
+            targetOld.has(path[0]) &&
+            Quercus.isQuercus(targetOld.get(path[0]))
+        ) {
+            target = targetOld.get(path[0]);
         } else {
             if (createMissing) {
-                targetNew = new Quercus();
-                target.set(path[0], targetNew);
+                target = new Quercus();
+                targetOld.set(path[0], target);
             } else {
                 success = false;
             }
@@ -44,9 +44,9 @@ const resolvePath = (
     }
 
     if (path.length > 2 && success) {
-        return resolvePath(targetNew, path.slice(1), createMissing);
+        return resolvePath(target, path.slice(1), createMissing);
     } else {
-        return { success, key, target: targetNew };
+        return { target, key, success };
     }
 };
 

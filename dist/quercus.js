@@ -11,22 +11,19 @@ var Quercus = (function () {
  * @param {boolean} [createMissing=false]
  * @returns {object}
  */
-const resolvePath = (target, path, createMissing = false) => {
-    /**
-     * Is assigned to input as default and only changed when the next sub-Quercus is found
-     */
-    let targetNew = target;
+const resolvePath = (targetOld, path, createMissing = false) => {
+    let target = targetOld;
     let key;
     let success = true;
     if (path.length === 1) {
         key = path[0];
     } else {
-        if (target.has(path[0]) && Quercus.isQuercus(target.get(path[0]))) {
-            targetNew = target.get(path[0]);
+        if (targetOld.has(path[0]) && Quercus.isQuercus(targetOld.get(path[0]))) {
+            target = targetOld.get(path[0]);
         } else {
             if (createMissing) {
-                targetNew = new Quercus();
-                target.set(path[0], targetNew);
+                target = new Quercus();
+                targetOld.set(path[0], target);
             } else {
                 success = false;
             }
@@ -34,9 +31,9 @@ const resolvePath = (target, path, createMissing = false) => {
         key = path[1];
     }
     if (path.length > 2 && success) {
-        return resolvePath(targetNew, path.slice(1), createMissing);
+        return resolvePath(target, path.slice(1), createMissing);
     } else {
-        return { success, key, target: targetNew };
+        return { target, key, success };
     }
 };
 /**
