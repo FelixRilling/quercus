@@ -3,6 +3,7 @@ import { isInstanceOf } from "lightdash/dist/lightdash.esm";
 /**
  * Utility class to resolve paths
  *
+ * @private
  * @param {TreeNode} target
  * @param {Array<string>} path
  * @param {boolean} [createMissing=false]
@@ -51,7 +52,7 @@ const TreeNode = class extends Map {
      * Quercus main class constructor
      *
      * @constructor
-     * @param {Array<Array<string>,any>} [pairArr=null]
+     * @param {Array<Array<string>,any>} [pairArr=null] Optional array of path-value pairs to set
      */
     constructor(pairArr = []) {
         super();

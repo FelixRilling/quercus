@@ -54,11 +54,22 @@ describe("Normal", () => {
     q.setPath(["foo", "bar"], 5);
     q.setPath(["foo", "bizz", "buzz"], 12);
     q.setPath(["bar", "fazz"], 560);
+    q.setPath(["bar", "boo", "baa", "bii", "bee"], 9);
 
     console.log(q);
 
     it("Size", () => {
         expect(q.size).toBe(2);
+    });
+
+    it("Has TreeNode", () => {
+        expect(q.hasPath(["foo", "bizz"], true)).toBe(false);
+    });
+    it("Has TreeNode valuesOnly=false", () => {
+        expect(q.hasPath(["foo", "bizz"], false)).toBe(true);
+    });
+    it("Get TreeNode", () => {
+        expect(Quercus.isTreeNode(q.getPath(["foo", "bizz"]))).toBe(true);
     });
 
     it("Has", () => {
@@ -68,10 +79,24 @@ describe("Normal", () => {
         expect(q.getPath(["foo", "bizz", "buzz"])).toBe(12);
     });
 
+    it("Has Deep", () => {
+        expect(q.hasPath(["bar", "boo", "baa", "bii", "bee"])).toBe(true);
+    });
+    it("Get Deep", () => {
+        expect(q.getPath(["bar", "boo", "baa", "bii", "bee"])).toBe(9);
+    });
+
     it("Has Nonexisting", () => {
         expect(q.hasPath(["foo", "lorem"])).toBe(false);
     });
     it("Get Nonexisting", () => {
         expect(q.getPath(["foo", "lorem"])).toBe(null);
+    });
+
+    it("Has Nonexisting Deep", () => {
+        expect(q.hasPath(["bar", "boo", "baa", "a", "b", "c"])).toBe(false);
+    });
+    it("Get Nonexisting Deep", () => {
+        expect(q.getPath(["bar", "boo", "baa", "a", "b", "c"])).toBe(null);
     });
 });
