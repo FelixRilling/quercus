@@ -50,12 +50,12 @@ const isInstanceOf = (val, target) => val instanceof target;
  */
 const resolvePath = (target, path, createMissing = false) => {
     let targetNew;
-    let rest;
+    let key;
     let success = true;
 
     if (path.length === 1) {
         targetNew = target;
-        rest = path[0];
+        key = path[0];
     } else {
         if (target.has(path[0]) && TreeNode.isTreeNode(target.get(path[0]))) {
             targetNew = target.get(path[0]);
@@ -68,13 +68,13 @@ const resolvePath = (target, path, createMissing = false) => {
             }
         }
 
-        rest = path[1];
+        key = path[1];
     }
 
     if (path.length > 2 && success) {
         return resolvePath(targetNew, path.slice(1), createMissing);
     } else {
-        return { success, rest, target: targetNew };
+        return { success, key, target: targetNew };
     }
 };
 
@@ -118,15 +118,13 @@ const TreeNode = class extends Map {
 
         const resolved = resolvePath(this, path);
 
-        if (resolved.success && resolved.target.has(resolved.rest)) {
+        if (resolved.success && resolved.target.has(resolved.key)) {
             if (!treeNodesAreTruthy) {
-                return !TreeNode.isTreeNode(resolved.target.get(resolved.rest));
-            } else {
-                return true;
+                return !TreeNode.isTreeNode(resolved.target.get(resolved.key));
             }
-        } else {
-            return false;
+            return true;
         }
+        return false;
     }
     /**
      * Returns value of a given path
@@ -139,8 +137,8 @@ const TreeNode = class extends Map {
 
         const resolved = resolvePath(this, path);
 
-        return resolved.success && resolved.target.has(resolved.rest)
-            ? resolved.target.get(resolved.rest)
+        return resolved.success && resolved.target.has(resolved.key)
+            ? resolved.target.get(resolved.key)
             : null;
     }
     /**
@@ -154,7 +152,7 @@ const TreeNode = class extends Map {
 
         const resolved = resolvePath(this, path, true);
 
-        resolved.target.set(resolved.rest, val);
+        resolved.target.set(resolved.key, val);
 
         return resolved.target;
     }
