@@ -4,7 +4,10 @@
     "description": "Simple and fast tree data structures in JS",
     "main": "dist/quercus.common.js",
     "module": "dist/quercus.esm.js",
-    "files": ["src/", "dist/"],
+    "files": [
+        "src/",
+        "dist/"
+    ],
     "constants": {
         "dirBase": {
             "input": "./src",
@@ -17,7 +20,9 @@
                 "file": "quercus"
             },
             "targets": {
-                "browsers": ["Chrome >= 58"]
+                "browsers": [
+                    "Chrome >= 58"
+                ]
             }
         }
     },
@@ -33,16 +38,17 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/quercus.git"
     },
-    "keywords": ["tree", "data-structure"],
+    "keywords": [
+        "tree",
+        "data-structure"
+    ],
     "author": "Felix Rilling",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/FelixRilling/quercus/issues"
     },
     "homepage": "https://github.com/FelixRilling/quercus#readme",
-    "dependencies": {
-        "lightdash": "^3.3.2"
-    },
+    "dependencies": {},
     "devDependencies": {
         "babel-core": "^6.26.0",
         "babel-plugin-external-helpers": "^6.22.0",
