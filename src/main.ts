@@ -1,11 +1,11 @@
 interface IResolvedPath {
-    target: Quercus;
-    key: any;
-    success: boolean;
+    readonly target: Quercus;
+    readonly key: any;
+    readonly success: boolean;
 }
 
 /**
- * Utility class to resolve paths
+ * Utility class to resolve paths.
  *
  * @private
  * @since 1.0.0
@@ -16,7 +16,8 @@ interface IResolvedPath {
  * @example
  * const q = new Quercus([["foo", "bar"], 5]);
  *
- * resolvePath(q, ["foo", "bar"]) // {target: Quercus{"bar"=> 5}, key: "bar", success: true}
+ * // returns {target: Quercus{"bar"=> 5}, key: "bar", success: true}
+ * resolvePath(q, ["foo", "bar"])
  */
 const resolvePath = (
     targetOld: Quercus,
@@ -62,7 +63,7 @@ const resolvePath = (
 };
 
 /**
- * Quercus main class
+ * Quercus main class.
  *
  * @class
  * @since 1.0.0
@@ -70,7 +71,7 @@ const resolvePath = (
  */
 class Quercus extends Map<any, Quercus | any> {
     /**
-     * Checks if a value is a Quercus instance
+     * Checks if a value is a Quercus instance.
      *
      * @static
      * @since 1.0.0
@@ -87,7 +88,7 @@ class Quercus extends Map<any, Quercus | any> {
         return val instanceof Quercus;
     }
     /**
-     * Quercus main class constructor
+     * Quercus main class constructor.
      *
      * @constructor
      * @since 1.0.0
@@ -102,7 +103,7 @@ class Quercus extends Map<any, Quercus | any> {
         pairArr.forEach((pair: [any[], any]) => this.setPath(pair[0], pair[1]));
     }
     /**
-     * Checks if a given path exists
+     * Checks if a given path exists.
      *
      * @since 1.0.0
      * @param {any[]} path
@@ -166,8 +167,9 @@ class Quercus extends Map<any, Quercus | any> {
     }
     /**
      * Sets value of a given path.
+     *
      * If the given path is empty, null is returned.
-     * If the value was set successfully, the value's Node is returned
+     * If the value was set successfully, the value's Node is returned.
      *
      * @since 1.0.0
      * @param {any[]} path
