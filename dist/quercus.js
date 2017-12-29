@@ -32,11 +32,13 @@ const resolvePath = (targetOld, path, createMissing = false) => {
          */
         if (targetOld.has(key) && Quercus.isQuercus(sub)) {
             target = sub;
-        } else {
+        }
+        else {
             if (createMissing) {
                 target = new Quercus();
                 targetOld.set(key, target);
-            } else {
+            }
+            else {
                 success = false;
             }
         }
@@ -45,7 +47,8 @@ const resolvePath = (targetOld, path, createMissing = false) => {
     }
     if (path.length > 2 && success) {
         return resolvePath(target, path.slice(1), createMissing);
-    } else {
+    }
+    else {
         return { target, key, success };
     }
 };
@@ -86,7 +89,7 @@ class Quercus extends Map {
      */
     constructor(pairArr = []) {
         super();
-        pairArr.forEach(pair => this.setPath(pair[0], pair[1]));
+        pairArr.forEach((pair) => this.setPath(pair[0], pair[1]));
     }
     /**
      * Checks if a given path exists
@@ -173,3 +176,4 @@ class Quercus extends Map {
 return Quercus;
 
 }());
+//# sourceMappingURL=quercus.js.map
