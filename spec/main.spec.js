@@ -1,9 +1,6 @@
 "use strict";
 
-const CONSTANTS = require("../package.json").constants;
-const Quercus = require(`../${CONSTANTS.dirBase.output}/${
-    CONSTANTS.js.namespace.file
-}.common.js`);
+const Quercus = require("../dist/quercus.common");
 
 describe("Empty", () => {
     const q = new Quercus();
