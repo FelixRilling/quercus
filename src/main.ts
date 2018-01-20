@@ -1,8 +1,6 @@
-interface IResolvedPath {
-    readonly target: Quercus;
-    readonly key: any;
-    readonly success: boolean;
-}
+import { isInstanceOf } from "lightdash";
+import { IResolvedPath } from "./interfaces";
+import { path, pathEntry, pathEntryInitializer } from "./types";
 
 /**
  * Utility class to resolve paths.
@@ -26,7 +24,7 @@ const resolvePath = (
 ): IResolvedPath => {
     let target: Quercus = targetOld;
     let key: any = path[0];
-    let success: boolean = true;
+    let success = true;
 
     if (path.length > 1) {
         const sub = targetOld.get(key);
@@ -85,7 +83,7 @@ class Quercus extends Map<any, Quercus | any> {
      * Quercus.isQuercus("foo") // false
      */
     public static isQuercus(val: any): boolean {
-        return val instanceof Quercus;
+        return isInstanceOf(val, Quercus);
     }
     /**
      * Quercus main class constructor.
@@ -97,10 +95,10 @@ class Quercus extends Map<any, Quercus | any> {
      * const q = new Quercus(); // Empty tree
      * const q2 = new Quercus([["foo", bar], 5]); // Tree initialized with a path-value pair
      */
-    public constructor(pairArr: Array<[any[], any]> = []) {
+    public constructor(pairArr: pathEntryInitializer = []) {
         super();
 
-        pairArr.forEach((pair: [any[], any]) => this.setPath(pair[0], pair[1]));
+        pairArr.forEach((pair: pathEntry) => this.setPath(pair[0], pair[1]));
     }
     /**
      * Checks if a given path exists.
@@ -121,7 +119,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.hasPath(["foo"], false); // true
      */
     public hasPath(
-        path: any[],
+        path: path,
         quercusNodesAreTruthy: boolean = false
     ): boolean {
         if (path.length === 0) {
@@ -156,7 +154,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.getPath(["bar"]); // Quercus{"fazz"=> 560}
      * q.getPath(["lorem"]); // null
      */
-    public getPath(path: any[]): any | null {
+    public getPath(path: path): any | null {
         if (path.length === 0) {
             return this;
         }
@@ -182,7 +180,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.setPath(["bar", "fazz"], 560); // Quercus{"fazz"=>560}
      * q.setPath([], "foo"); // null
      */
-    public setPath(path: any[], val: any): Quercus | null {
+    public setPath(path: path, val: any): Quercus | null {
         if (path.length === 0) {
             return null;
         }

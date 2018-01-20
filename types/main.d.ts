@@ -1,3 +1,4 @@
+import { path, pathEntryInitializer } from "./types";
 /**
  * Quercus main class.
  *
@@ -31,7 +32,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * const q = new Quercus(); // Empty tree
      * const q2 = new Quercus([["foo", bar], 5]); // Tree initialized with a path-value pair
      */
-    constructor(pairArr?: Array<[any[], any]>);
+    constructor(pairArr?: pathEntryInitializer);
     /**
      * Checks if a given path exists.
      *
@@ -50,7 +51,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.hasPath(["foo"]); // false
      * q.hasPath(["foo"], false); // true
      */
-    hasPath(path: any[], quercusNodesAreTruthy?: boolean): boolean;
+    hasPath(path: path, quercusNodesAreTruthy?: boolean): boolean;
     /**
      * Returns value of a given path.
      * If the path could not be found, null is returned
@@ -69,7 +70,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.getPath(["bar"]); // Quercus{"fazz"=> 560}
      * q.getPath(["lorem"]); // null
      */
-    getPath(path: any[]): any | null;
+    getPath(path: path): any | null;
     /**
      * Sets value of a given path.
      *
@@ -87,6 +88,6 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.setPath(["bar", "fazz"], 560); // Quercus{"fazz"=>560}
      * q.setPath([], "foo"); // null
      */
-    setPath(path: any[], val: any): Quercus | null;
+    setPath(path: path, val: any): Quercus | null;
 }
 export default Quercus;

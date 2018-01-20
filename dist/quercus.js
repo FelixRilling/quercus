@@ -2,6 +2,47 @@ var Quercus = (function () {
 'use strict';
 
 /**
+ * Checks if the value has a certain type-string.
+ *
+ * @function isTypeOf
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @param {string} type
+ * @returns {boolean}
+ * @example
+ * // returns true
+ * isTypeOf({}, "object")
+ * isTypeOf([], "object")
+ * isTypeOf("foo", "string")
+ *
+ * @example
+ * // returns false
+ * isTypeOf("foo", "number")
+ */
+/**
+ * Checks if the value is an instance of a target constructor.
+ *
+ * @function isInstanceOf
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @param {Class} target
+ * @returns {boolean}
+ * @example
+ * // returns true
+ * isInstanceOf({}, Object)
+ * isInstanceOf([], Object)
+ * isInstanceOf([], Array)
+ *
+ * @example
+ * // returns false
+ * isInstanceOf({}, Array)
+ * isInstanceOf([], Map)
+ */
+const isInstanceOf = (val, target) => val instanceof target;
+
+/**
  * Utility class to resolve paths.
  *
  * @private
@@ -76,7 +117,7 @@ class Quercus extends Map {
      * Quercus.isQuercus("foo") // false
      */
     static isQuercus(val) {
-        return val instanceof Quercus;
+        return isInstanceOf(val, Quercus);
     }
     /**
      * Quercus main class constructor.

@@ -1,3 +1,5 @@
+import { isInstanceOf } from 'lightdash';
+
 /**
  * Utility class to resolve paths.
  *
@@ -73,7 +75,7 @@ class Quercus extends Map {
      * Quercus.isQuercus("foo") // false
      */
     static isQuercus(val) {
-        return val instanceof Quercus;
+        return isInstanceOf(val, Quercus);
     }
     /**
      * Quercus main class constructor.

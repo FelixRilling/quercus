@@ -1,5 +1,7 @@
 'use strict';
 
+var lightdash = require('lightdash');
+
 /**
  * Utility class to resolve paths.
  *
@@ -75,7 +77,7 @@ class Quercus extends Map {
      * Quercus.isQuercus("foo") // false
      */
     static isQuercus(val) {
-        return val instanceof Quercus;
+        return lightdash.isInstanceOf(val, Quercus);
     }
     /**
      * Quercus main class constructor.
