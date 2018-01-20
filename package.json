@@ -11,7 +11,9 @@
             "module": "Quercus",
             "file": "quercus"
         },
-        "external": ["lightdash"]
+        "external": [
+            "lightdash"
+        ]
     },
     "scripts": {
         "start": "npm-run-all lint build test docs",
@@ -28,7 +30,10 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/quercus.git"
     },
-    "keywords": ["tree", "data-structure"],
+    "keywords": [
+        "tree",
+        "data-structure"
+    ],
     "author": "Felix Rilling",
     "license": "MIT",
     "bugs": {
