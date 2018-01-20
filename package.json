@@ -10,7 +10,8 @@
         "namespace": {
             "module": "Quercus",
             "file": "quercus"
-        }
+        },
+        "external": ["lightdash"]
     },
     "scripts": {
         "start": "npm-run-all lint build test docs",
@@ -27,33 +28,33 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/quercus.git"
     },
-    "keywords": [
-        "tree",
-        "data-structure"
-    ],
+    "keywords": ["tree", "data-structure"],
     "author": "Felix Rilling",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/FelixRilling/quercus/issues"
     },
     "homepage": "https://github.com/FelixRilling/quercus#readme",
-    "dependencies": {},
+    "dependencies": {
+        "lightdash": "^4.0.1"
+    },
     "devDependencies": {
-        "@babel/core": "^7.0.0-beta.36",
-        "@babel/plugin-external-helpers": "^7.0.0-beta.36",
-        "@babel/preset-env": "^7.0.0-beta.36",
+        "@babel/core": "^7.0.0-beta.38",
+        "@babel/plugin-external-helpers": "^7.0.0-beta.38",
+        "@babel/preset-env": "^7.0.0-beta.38",
         "docdash": "git+https://github.com/clenemt/docdash.git",
+        "eslint": "^4.15.0",
         "jasmine": "^2.8.0",
         "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
         "npm-run-all": "^4.1.2",
-        "rollup": "^0.53.1",
+        "rollup": "^0.54.1",
         "rollup-plugin-babel": "^4.0.0-beta.0",
         "rollup-plugin-json": "^2.3.0",
-        "rollup-plugin-node-resolve": "^3.0.0",
-        "rollup-plugin-typescript2": "^0.9.0",
+        "rollup-plugin-node-resolve": "^3.0.2",
+        "rollup-plugin-typescript2": "^0.10.0",
         "rollup-plugin-uglify-es": "0.0.1",
-        "tslint": "^5.8.0",
         "typescript": "^2.6.2",
-        "uglify-es": "^3.3.3"
+        "typescript-eslint-parser": "^12.0.0",
+        "uglify-es": "^3.3.7"
     }
 }

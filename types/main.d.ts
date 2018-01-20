@@ -29,7 +29,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * @param {Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
      * @example
      * const q = new Quercus(); // Empty tree
-     * const q2 = new Quercus([["foo", bar], 5]); // Tree initalized with a path-value pair
+     * const q2 = new Quercus([["foo", bar], 5]); // Tree initialized with a path-value pair
      */
     constructor(pairArr?: Array<[any[], any]>);
     /**

@@ -38,7 +38,7 @@ const resolvePath = (
          *     false ->
          *         Is createMissing truthy?
          *             true  -> Create a new Quercus; assign it and set it on the parent
-         *             false -> declare unsuccessfull, abort
+         *             false -> declare unsuccessful, abort
          */
         if (targetOld.has(key) && Quercus.isQuercus(sub)) {
             target = sub;
@@ -95,7 +95,7 @@ class Quercus extends Map<any, Quercus | any> {
      * @param {Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
      * @example
      * const q = new Quercus(); // Empty tree
-     * const q2 = new Quercus([["foo", bar], 5]); // Tree initalized with a path-value pair
+     * const q2 = new Quercus([["foo", bar], 5]); // Tree initialized with a path-value pair
      */
     public constructor(pairArr: Array<[any[], any]> = []) {
         super();
