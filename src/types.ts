@@ -1,5 +1,5 @@
-type path = any[];
-type pathEntry = [path, any];
-type pathEntryInitializer = pathEntry[];
+type quercusPath = any[];
+type quercusPathEntry = [quercusPath, any];
+type quercusPathEntryInitializer = quercusPathEntry[];
 
-export { path, pathEntry, pathEntryInitializer };
+export { quercusPath, quercusPathEntry, quercusPathEntryInitializer };

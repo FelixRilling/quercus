@@ -1,6 +1,10 @@
 import { isInstanceOf } from "lightdash";
-import { IResolvedPath } from "./interfaces";
-import { path, pathEntry, pathEntryInitializer } from "./types";
+import { IQurercus, IResolvedPath } from "./interfaces";
+import {
+    quercusPath,
+    quercusPathEntry,
+    quercusPathEntryInitializer
+} from "./types";
 
 /**
  * Utility class to resolve paths.
@@ -67,7 +71,7 @@ const resolvePath = (
  * @since 1.0.0
  * @extends Map
  */
-class Quercus extends Map<any, Quercus | any> {
+class Quercus extends Map<any, Quercus | any> implements IQurercus {
     /**
      * Checks if a value is a Quercus instance.
      *
@@ -95,10 +99,12 @@ class Quercus extends Map<any, Quercus | any> {
      * const q = new Quercus(); // Empty tree
      * const q2 = new Quercus([["foo", bar], 5]); // Tree initialized with a path-value pair
      */
-    public constructor(pairArr: pathEntryInitializer = []) {
+    public constructor(pairArr: quercusPathEntryInitializer = []) {
         super();
 
-        pairArr.forEach((pair: pathEntry) => this.setPath(pair[0], pair[1]));
+        pairArr.forEach((pair: quercusPathEntry) =>
+            this.setPath(pair[0], pair[1])
+        );
     }
     /**
      * Checks if a given path exists.
@@ -119,7 +125,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.hasPath(["foo"], false); // true
      */
     public hasPath(
-        path: path,
+        path: quercusPath,
         quercusNodesAreTruthy: boolean = false
     ): boolean {
         if (path.length === 0) {
@@ -154,7 +160,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.getPath(["bar"]); // Quercus{"fazz"=> 560}
      * q.getPath(["lorem"]); // null
      */
-    public getPath(path: path): any | null {
+    public getPath(path: quercusPath): any | null {
         if (path.length === 0) {
             return this;
         }
@@ -180,7 +186,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.setPath(["bar", "fazz"], 560); // Quercus{"fazz"=>560}
      * q.setPath([], "foo"); // null
      */
-    public setPath(path: path, val: any): Quercus | null {
+    public setPath(path: quercusPath, val: any): Quercus | null {
         if (path.length === 0) {
             return null;
         }

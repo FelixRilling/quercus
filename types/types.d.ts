@@ -1,4 +1,4 @@
-declare type path = any[];
-declare type pathEntry = [path, any];
-declare type pathEntryInitializer = pathEntry[];
-export { path, pathEntry, pathEntryInitializer };
+declare type quercusPath = any[];
+declare type quercusPathEntry = [quercusPath, any];
+declare type quercusPathEntryInitializer = quercusPathEntry[];
+export { quercusPath, quercusPathEntry, quercusPathEntryInitializer };
