@@ -5,8 +5,6 @@ const Quercus = require("../dist/quercus.common");
 describe("Empty", () => {
     const q = new Quercus();
 
-    console.log(q);
-
     it("Size", () => {
         expect(q.size).toBe(0);
     });
@@ -23,8 +21,6 @@ describe("Simple", () => {
     const q = new Quercus();
 
     q.setPath(["foo"], "bar");
-
-    console.log(q);
 
     it("Size", () => {
         expect(q.size).toBe(1);
@@ -52,8 +48,6 @@ describe("Normal", () => {
     q.setPath(["foo", "bizz", "buzz"], 12);
     q.setPath(["bar", "fazz"], 560);
     q.setPath(["bar", "boo", "baa", "bii", "bee"], 9);
-
-    console.log(q);
 
     it("Size", () => {
         expect(q.size).toBe(2);
