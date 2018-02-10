@@ -1,12 +1,12 @@
 import { quercusPath } from "./types";
-interface IQurercus extends Map<any, IQurercus | any> {
+interface IQuercus extends Map<any, IQuercus | any> {
     hasPath: (path: quercusPath, quercusNodesAreTruthy: boolean) => boolean;
     getPath: (path: quercusPath) => any | null;
-    setPath: (path: quercusPath, val: any) => IQurercus | null;
+    setPath: (path: quercusPath, val: any) => IQuercus | null;
 }
 interface IResolvedPath {
-    readonly target: IQurercus;
+    readonly target: IQuercus;
     readonly key: any;
     readonly success: boolean;
 }
-export { IQurercus, IResolvedPath };
+export { IQuercus, IResolvedPath };

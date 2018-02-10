@@ -1,4 +1,4 @@
-import { IQurercus } from "./interfaces";
+import { IQuercus } from "./interfaces";
 import { quercusPath, quercusPathEntryInitializer } from "./types";
 /**
  * Quercus main class.
@@ -7,7 +7,7 @@ import { quercusPath, quercusPathEntryInitializer } from "./types";
  * @since 1.0.0
  * @extends Map
  */
-declare class Quercus extends Map<any, Quercus | any> implements IQurercus {
+declare class Quercus extends Map<any, Quercus | any> implements IQuercus {
     /**
      * Checks if a value is a Quercus instance.
      *

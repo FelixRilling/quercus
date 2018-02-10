@@ -1,5 +1,5 @@
 import { isInstanceOf } from "lightdash";
-import { IQurercus, IResolvedPath } from "./interfaces";
+import { IQuercus, IResolvedPath } from "./interfaces";
 import {
     quercusPath,
     quercusPathEntry,
@@ -71,7 +71,7 @@ const resolvePath = (
  * @since 1.0.0
  * @extends Map
  */
-class Quercus extends Map<any, Quercus | any> implements IQurercus {
+class Quercus extends Map<any, Quercus | any> implements IQuercus {
     /**
      * Checks if a value is a Quercus instance.
      *
