@@ -90,9 +90,7 @@ const resolvePath = (targetOld, path, createMissing = false) => {
     if (path.length > 2 && success) {
         return resolvePath(target, path.slice(1), createMissing);
     }
-    else {
-        return { target, key, success };
-    }
+    return { target, key, success };
 };
 /**
  * Quercus main class.
