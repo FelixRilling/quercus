@@ -5,7 +5,7 @@
         "newLine": "LF",
         "removeComments": false,
         "strict": true,
-        "noImplicitAny": false
+        "noImplicitAny": true
     },
     "include": ["src/**/*"]
 }

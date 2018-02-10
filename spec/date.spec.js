@@ -1,5 +1,5 @@
 "use strict";
-
+/*
 const Quercus = require("../dist/quercus.common");
 const { arrUniq, randomItem } = require("lightdash");
 
@@ -46,7 +46,7 @@ describe("Date 128 entries", () => {
         expect(q.getPath(date[0])).toBe(date[1]);
     });
 });
-/*
+
 describe("Date 1024 entries", () => {
     const dates = getRandomDatesArr(1024);
     const q = new Quercus(dates);

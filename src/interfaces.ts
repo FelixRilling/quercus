@@ -5,9 +5,12 @@ import {
 } from "./types";
 
 interface IQuercus extends Map<any, IQuercus | any> {
-    hasPath: (path: quercusPath, quercusNodesAreTruthy: boolean) => boolean;
-    getPath: (path: quercusPath) => any | null;
-    setPath: (path: quercusPath, val: any) => IQuercus | null;
+    readonly hasPath: (
+        path: quercusPath,
+        quercusNodesAreTruthy: boolean
+    ) => boolean;
+    readonly getPath: (path: quercusPath) => any | null;
+    readonly setPath: (path: quercusPath, val: any) => IQuercus | null;
 }
 
 interface IResolvedPath {

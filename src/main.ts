@@ -26,7 +26,7 @@ const resolvePath = (
     path: any[],
     createMissing: boolean = false
 ): IResolvedPath => {
-    let target: Quercus = targetOld;
+    let target = targetOld;
     let key: any = path[0];
     let success = true;
 
@@ -124,10 +124,7 @@ class Quercus extends Map<any, Quercus | any> implements IQuercus {
      * q.hasPath(["foo"]); // false
      * q.hasPath(["foo"], false); // true
      */
-    public hasPath(
-        path: quercusPath,
-        quercusNodesAreTruthy: boolean = false
-    ): boolean {
+    public hasPath(path: quercusPath, quercusNodesAreTruthy = false): boolean {
         if (path.length === 0) {
             return quercusNodesAreTruthy;
         }
