@@ -11,14 +11,18 @@ var Quercus = (function () {
      * @param {string} type
      * @returns {boolean}
      * @example
-     * // returns true
      * isTypeOf({}, "object")
+     * // => true
+     *
      * isTypeOf([], "object")
+     * // => true
+     *
      * isTypeOf("foo", "string")
+     * // => true
      *
      * @example
-     * // returns false
      * isTypeOf("foo", "number")
+     * // => false
      */
 
     /**
@@ -31,15 +35,21 @@ var Quercus = (function () {
      * @param {Class} target
      * @returns {boolean}
      * @example
-     * // returns true
      * isInstanceOf({}, Object)
+     * // => true
+     *
      * isInstanceOf([], Object)
+     * // => true
+     *
      * isInstanceOf([], Array)
+     * // => true
      *
      * @example
-     * // returns false
      * isInstanceOf({}, Array)
+     * // => false
+     *
      * isInstanceOf([], Map)
+     * // => false
      */
     const isInstanceOf = (val, target) => val instanceof target;
 
