@@ -65,7 +65,7 @@ var Quercus = (function () {
      * @example
      * const q = new Quercus([["foo", "bar"], 5]);
      *
-     * // returns {target: Quercus{"bar"=> 5}, key: "bar", success: true}
+     * // => {target: Quercus{"bar"=> 5}, key: "bar", success: true}
      * resolvePath(q, ["foo", "bar"])
      */
     const resolvePath = (targetOld, path, createMissing = false) => {
@@ -121,8 +121,13 @@ var Quercus = (function () {
          * @example
          * const q = new Quercus([["foo", "bar"], 5]);
          *
-         * Quercus.isQuercus(q) // true
-         * Quercus.isQuercus(q.getPath(["foo"])) // true
+         * // => true
+         * Quercus.isQuercus(q)
+         *
+         * // => true
+         * Quercus.isQuercus(q.getPath(["foo"]))
+         *
+         * // => true
          * Quercus.isQuercus("foo") // false
          */
         static isQuercus(val) {
@@ -135,8 +140,11 @@ var Quercus = (function () {
          * @since 1.0.0
          * @param {Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
          * @example
-         * const q = new Quercus(); // Empty tree
-         * const q2 = new Quercus([["foo", bar], 5]); // Tree initialized with a path-value pair
+         * // Empty tree
+         * const q = new Quercus();
+         *
+         * // Tree initialized with a path-value pair
+         * const q2 = new Quercus([["foo", bar], 5]);
          */
         constructor(pairArr = []) {
             super();
@@ -156,9 +164,14 @@ var Quercus = (function () {
          *       [["bar", "fazz"], 560]
          *   ]);
          *
-         * q.hasPath(["foo", "bar"]); // true
+         * // => true
+         * q.hasPath(["foo", "bar"]);
+         *
+         * // => false
          * q.hasPath(["foo"]); // false
-         * q.hasPath(["foo"], false); // true
+         *
+         * // => true
+         * q.hasPath(["foo"], false);
          */
         hasPath(path, quercusNodesAreTruthy = false) {
             if (path.length === 0) {
@@ -187,9 +200,14 @@ var Quercus = (function () {
          *       [["bar", "fazz"], 560]
          *   ]);
          *
-         * q.getPath(["foo", "bar"]); // 5
-         * q.getPath(["bar"]); // Quercus{"fazz"=> 560}
-         * q.getPath(["lorem"]); // null
+         * // => 5
+         * q.getPath(["foo", "bar"]);
+         *
+         * // =>  Quercus{"fazz"=> 560}
+         * q.getPath(["bar"]);
+         *
+         * // => null
+         * q.getPath(["lorem"]);
          */
         getPath(path) {
             if (path.length === 0) {
@@ -211,9 +229,14 @@ var Quercus = (function () {
          * @example
          * const q = new Quercus();
          *
-         * q.setPath(["foo", "bar"], 5); // Quercus{"bar"=>5}
-         * q.setPath(["bar", "fazz"], 560); // Quercus{"fazz"=>560}
-         * q.setPath([], "foo"); // null
+         *  // => Quercus{"bar"=>5}
+         * q.setPath(["foo", "bar"], 5);
+         *
+         * // => Quercus{"fazz"=>560}
+         * q.setPath(["bar", "fazz"], 560);
+         *
+         * // => null
+         * q.setPath([], "foo");
          */
         setPath(path, val) {
             if (path.length === 0) {

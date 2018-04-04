@@ -18,7 +18,7 @@ import {
  * @example
  * const q = new Quercus([["foo", "bar"], 5]);
  *
- * // returns {target: Quercus{"bar"=> 5}, key: "bar", success: true}
+ * // => {target: Quercus{"bar"=> 5}, key: "bar", success: true}
  * resolvePath(q, ["foo", "bar"])
  */
 const resolvePath = (
@@ -82,8 +82,13 @@ class Quercus extends Map<any, Quercus | any> implements IQuercus {
      * @example
      * const q = new Quercus([["foo", "bar"], 5]);
      *
-     * Quercus.isQuercus(q) // true
-     * Quercus.isQuercus(q.getPath(["foo"])) // true
+     * // => true
+     * Quercus.isQuercus(q)
+     *
+     * // => true
+     * Quercus.isQuercus(q.getPath(["foo"]))
+     *
+     * // => true
      * Quercus.isQuercus("foo") // false
      */
     public static isQuercus(val: any): boolean {
@@ -96,8 +101,11 @@ class Quercus extends Map<any, Quercus | any> implements IQuercus {
      * @since 1.0.0
      * @param {Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
      * @example
-     * const q = new Quercus(); // Empty tree
-     * const q2 = new Quercus([["foo", bar], 5]); // Tree initialized with a path-value pair
+     * // Empty tree
+     * const q = new Quercus();
+     *
+     * // Tree initialized with a path-value pair
+     * const q2 = new Quercus([["foo", bar], 5]);
      */
     public constructor(pairArr: quercusPathEntryInitializer = []) {
         super();
@@ -120,9 +128,14 @@ class Quercus extends Map<any, Quercus | any> implements IQuercus {
      *       [["bar", "fazz"], 560]
      *   ]);
      *
-     * q.hasPath(["foo", "bar"]); // true
+     * // => true
+     * q.hasPath(["foo", "bar"]);
+     *
+     * // => false
      * q.hasPath(["foo"]); // false
-     * q.hasPath(["foo"], false); // true
+     *
+     * // => true
+     * q.hasPath(["foo"], false);
      */
     public hasPath(path: quercusPath, quercusNodesAreTruthy = false): boolean {
         if (path.length === 0) {
@@ -153,9 +166,14 @@ class Quercus extends Map<any, Quercus | any> implements IQuercus {
      *       [["bar", "fazz"], 560]
      *   ]);
      *
-     * q.getPath(["foo", "bar"]); // 5
-     * q.getPath(["bar"]); // Quercus{"fazz"=> 560}
-     * q.getPath(["lorem"]); // null
+     * // => 5
+     * q.getPath(["foo", "bar"]);
+     *
+     * // =>  Quercus{"fazz"=> 560}
+     * q.getPath(["bar"]);
+     *
+     * // => null
+     * q.getPath(["lorem"]);
      */
     public getPath(path: quercusPath): any | null {
         if (path.length === 0) {
@@ -179,9 +197,14 @@ class Quercus extends Map<any, Quercus | any> implements IQuercus {
      * @example
      * const q = new Quercus();
      *
-     * q.setPath(["foo", "bar"], 5); // Quercus{"bar"=>5}
-     * q.setPath(["bar", "fazz"], 560); // Quercus{"fazz"=>560}
-     * q.setPath([], "foo"); // null
+     *  // => Quercus{"bar"=>5}
+     * q.setPath(["foo", "bar"], 5);
+     *
+     * // => Quercus{"fazz"=>560}
+     * q.setPath(["bar", "fazz"], 560);
+     *
+     * // => null
+     * q.setPath([], "foo");
      */
     public setPath(path: quercusPath, val: any): Quercus | null {
         if (path.length === 0) {
