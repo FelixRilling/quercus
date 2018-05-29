@@ -1,19 +1,19 @@
 import { isInstanceOf } from 'lightdash';
 
 /**
- * Utility class to resolve paths.
+ * Utility function to resolve paths.
  *
  * @private
  * @since 1.0.0
- * @param {Quercus} target
+ * @param {Quercus} targetOld
  * @param {any[]} path
  * @param {boolean} [createMissing=false]
  * @returns {object}
  * @example
  * const q = new Quercus([["foo", "bar"], 5]);
  *
- * // => {target: Quercus{"bar"=> 5}, key: "bar", success: true}
  * resolvePath(q, ["foo", "bar"])
+ * // => {target: Quercus{"bar": 5}, key: "bar", success: true}
  */
 const resolvePath = (targetOld, path, createMissing = false) => {
     let target = targetOld;
@@ -22,7 +22,6 @@ const resolvePath = (targetOld, path, createMissing = false) => {
     if (path.length > 1) {
         const sub = targetOld.get(key);
         /**
-         * Flow:
          * Does the key exist on the target?
          *     true  -> assign it
          *     false ->
@@ -68,14 +67,14 @@ class Quercus extends Map {
      * @example
      * const q = new Quercus([["foo", "bar"], 5]);
      *
-     * // => true
      * Quercus.isQuercus(q)
-     *
      * // => true
+     *
      * Quercus.isQuercus(q.getPath(["foo"]))
-     *
      * // => true
-     * Quercus.isQuercus("foo") // false
+     *
+     * Quercus.isQuercus("foo")
+     * // => false
      */
     static isQuercus(val) {
         return isInstanceOf(val, Quercus);
@@ -111,14 +110,14 @@ class Quercus extends Map {
      *       [["bar", "fazz"], 560]
      *   ]);
      *
-     * // => true
      * q.hasPath(["foo", "bar"]);
-     *
-     * // => false
-     * q.hasPath(["foo"]); // false
-     *
      * // => true
-     * q.hasPath(["foo"], false);
+     *
+     * q.hasPath(["foo"]);
+     * // => false
+     *
+     * q.hasPath(["foo"], true);
+     * // => true
      */
     hasPath(path, quercusNodesAreTruthy = false) {
         if (path.length === 0) {
@@ -135,7 +134,8 @@ class Quercus extends Map {
     }
     /**
      * Returns value of a given path.
-     * If the path could not be found, null is returned
+     *
+     * If the path could not be found, null is returned.
      *
      * @since 1.0.0
      * @param {any[]} path
@@ -147,14 +147,14 @@ class Quercus extends Map {
      *       [["bar", "fazz"], 560]
      *   ]);
      *
-     * // => 5
      * q.getPath(["foo", "bar"]);
+     * // => 5
      *
-     * // =>  Quercus{"fazz"=> 560}
      * q.getPath(["bar"]);
+     * // => Quercus{"fazz": 560}
      *
-     * // => null
      * q.getPath(["lorem"]);
+     * // => null
      */
     getPath(path) {
         if (path.length === 0) {
@@ -176,14 +176,14 @@ class Quercus extends Map {
      * @example
      * const q = new Quercus();
      *
-     *  // => Quercus{"bar"=>5}
      * q.setPath(["foo", "bar"], 5);
+     * // => Quercus{"bar": 5}
      *
-     * // => Quercus{"fazz"=>560}
      * q.setPath(["bar", "fazz"], 560);
+     * // => Quercus{"fazz": 560}
      *
-     * // => null
      * q.setPath([], "foo");
+     * // => null
      */
     setPath(path, val) {
         if (path.length === 0) {

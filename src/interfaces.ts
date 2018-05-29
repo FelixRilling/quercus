@@ -1,8 +1,4 @@
-import {
-    quercusPath,
-    quercusPathEntry,
-    quercusPathEntryInitializer
-} from "./types";
+import { quercusPath } from "./types";
 
 interface IQuercus extends Map<any, IQuercus | any> {
     readonly hasPath: (
