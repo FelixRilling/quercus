@@ -10,14 +10,14 @@ interface IResolvedPath {
     readonly success: boolean;
 }
 /**
- * Utility function to resolve paths.
+ * Resolves path through Quercus instances.
  *
  * @private
  * @since 1.0.0
- * @param {Quercus} targetOld
- * @param {any[]} path
- * @param {boolean} [createMissing=false]
- * @returns {object}
+ * @param {Quercus} targetOld starting target for resolving.
+ * @param {any[]} path path to resolve.
+ * @param {boolean} [createMissing=false] if requested instances should be created if they don't exist.
+ * @returns {object} resolved path object.
  * @example
  * const q = new Quercus([["foo", "bar"], 5]);
  *

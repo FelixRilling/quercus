@@ -1,14 +1,14 @@
 import { isInstanceOf } from 'lightdash';
 
 /**
- * Utility function to resolve paths.
+ * Resolves path through Quercus instances.
  *
  * @private
  * @since 1.0.0
- * @param {Quercus} targetOld
- * @param {any[]} path
- * @param {boolean} [createMissing=false]
- * @returns {object}
+ * @param {Quercus} targetOld starting target for resolving.
+ * @param {any[]} path path to resolve.
+ * @param {boolean} [createMissing=false] if requested instances should be created if they don't exist.
+ * @returns {object} resolved path object.
  * @example
  * const q = new Quercus([["foo", "bar"], 5]);
  *
@@ -63,8 +63,8 @@ class Quercus extends Map {
      *
      * @static
      * @since 1.0.0
-     * @param {any} val
-     * @returns {boolean}
+     * @param {any} val value to check.
+     * @returns {boolean} if the value is a Quercus instance.
      * @example
      * const q = new Quercus([["foo", "bar"], 5]);
      *
@@ -85,7 +85,7 @@ class Quercus extends Map {
      *
      * @constructor
      * @since 1.0.0
-     * @param {Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to set
+     * @param {Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to init.
      * @example
      * // Empty tree
      * const q = new Quercus();
@@ -101,9 +101,9 @@ class Quercus extends Map {
      * Checks if a given path exists.
      *
      * @since 1.0.0
-     * @param {any[]} path
-     * @param {boolean} [quercusNodesAreTruthy=false]
-     * @returns {boolean}
+     * @param {any[]} path path to check.
+     * @param {boolean} [quercusNodesAreTruthy=false] if nodes should be considered t be truthy.
+     * @returns {boolean} if the given path exists.
      * @example
      * const q = new Quercus([
      *       [["foo", "bar"], 5],
@@ -139,8 +139,8 @@ class Quercus extends Map {
      * If the path could not be found, null is returned.
      *
      * @since 1.0.0
-     * @param {any[]} path
-     * @returns {any|null}
+     * @param {any[]} path path to get.
+     * @returns {any|null} value of the node, or null if it is not found.
      * @example
      * const q = new Quercus([
      *       [["foo", "bar"], 5],
@@ -171,9 +171,9 @@ class Quercus extends Map {
      * If the value was set successfully, the value's Node is returned.
      *
      * @since 1.0.0
-     * @param {any[]} path
-     * @param {any} val
-     * @returns {Quercus|null}
+     * @param {any[]} path path to set.
+     * @param {any} val value to set.
+     * @returns {Quercus|null} the node that was set on, or null if it could not be set.
      * @example
      * const q = new Quercus();
      *
