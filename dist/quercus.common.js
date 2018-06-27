@@ -51,6 +51,7 @@ const resolvePath = (targetOld, path, createMissing = false) => {
     }
     return { target, key, success };
 };
+
 /**
  * Quercus main class.
  *

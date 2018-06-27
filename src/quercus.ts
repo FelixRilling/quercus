@@ -1,54 +1,10 @@
-import { isInstanceOf } from 'lightdash';
-
-/**
- * Utility function to resolve paths.
- *
- * @private
- * @since 1.0.0
- * @param {Quercus} targetOld
- * @param {any[]} path
- * @param {boolean} [createMissing=false]
- * @returns {object}
- * @example
- * const q = new Quercus([["foo", "bar"], 5]);
- *
- * resolvePath(q, ["foo", "bar"])
- * // => {target: Quercus{"bar": 5}, key: "bar", success: true}
- */
-const resolvePath = (targetOld, path, createMissing = false) => {
-    let target = targetOld;
-    let key = path[0];
-    let success = true;
-    if (path.length > 1) {
-        const sub = targetOld.get(key);
-        /**
-         * Does the key exist on the target?
-         *     true  -> assign it
-         *     false ->
-         *         Is createMissing truthy?
-         *             true  -> Create a new Quercus; assign it and set it on the parent
-         *             false -> declare unsuccessful, abort
-         */
-        if (targetOld.has(key) && Quercus.isQuercus(sub)) {
-            target = sub;
-        }
-        else {
-            if (createMissing) {
-                target = new Quercus();
-                targetOld.set(key, target);
-            }
-            else {
-                success = false;
-            }
-        }
-        // Assign the next key
-        key = path[1];
-    }
-    if (path.length > 2 && success) {
-        return resolvePath(target, path.slice(1), createMissing);
-    }
-    return { target, key, success };
-};
+import { isInstanceOf } from "lightdash";
+import {
+    quercusPath,
+    quercusPathEntry,
+    quercusPathEntryInitializer,
+    resolvePath
+} from "./lib/path";
 
 /**
  * Quercus main class.
@@ -57,7 +13,7 @@ const resolvePath = (targetOld, path, createMissing = false) => {
  * @since 1.0.0
  * @extends Map
  */
-class Quercus extends Map {
+class Quercus extends Map<any, Quercus | any> {
     /**
      * Checks if a value is a Quercus instance.
      *
@@ -77,7 +33,7 @@ class Quercus extends Map {
      * Quercus.isQuercus("foo")
      * // => false
      */
-    static isQuercus(val) {
+    public static isQuercus(val: any): boolean {
         return isInstanceOf(val, Quercus);
     }
     /**
@@ -93,9 +49,12 @@ class Quercus extends Map {
      * // Tree initialized with a path-value pair
      * const q2 = new Quercus([["foo", bar], 5]);
      */
-    constructor(pairArr = []) {
+    public constructor(pairArr: quercusPathEntryInitializer = []) {
         super();
-        pairArr.forEach((pair) => this.setPath(pair[0], pair[1]));
+
+        pairArr.forEach((pair: quercusPathEntry) =>
+            this.setPath(pair[0], pair[1])
+        );
     }
     /**
      * Checks if a given path exists.
@@ -120,11 +79,13 @@ class Quercus extends Map {
      * q.hasPath(["foo"], true);
      * // => true
      */
-    hasPath(path, quercusNodesAreTruthy = false) {
+    public hasPath(path: quercusPath, quercusNodesAreTruthy = false): boolean {
         if (path.length === 0) {
             return quercusNodesAreTruthy;
         }
+
         const { target, key, success } = resolvePath(this, path);
+
         if (success && target.has(key)) {
             if (!quercusNodesAreTruthy) {
                 return !Quercus.isQuercus(target.get(key));
@@ -157,11 +118,13 @@ class Quercus extends Map {
      * q.getPath(["lorem"]);
      * // => null
      */
-    getPath(path) {
+    public getPath(path: quercusPath): any | null {
         if (path.length === 0) {
             return this;
         }
+
         const { target, key, success } = resolvePath(this, path);
+
         return success && target.has(key) ? target.get(key) : null;
     }
     /**
@@ -186,14 +149,17 @@ class Quercus extends Map {
      * q.setPath([], "foo");
      * // => null
      */
-    setPath(path, val) {
+    public setPath(path: quercusPath, val: any): Quercus | null {
         if (path.length === 0) {
             return null;
         }
+
         const { target, key } = resolvePath(this, path, true);
+
         target.set(key, val);
+
         return target;
     }
 }
 
-export default Quercus;
+export { Quercus };

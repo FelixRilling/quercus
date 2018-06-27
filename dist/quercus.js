@@ -244,6 +244,7 @@ var Quercus = (function () {
       success: success
     };
   };
+
   /**
    * Quercus main class.
    *
@@ -251,7 +252,6 @@ var Quercus = (function () {
    * @since 1.0.0
    * @extends Map
    */
-
 
   var Quercus =
   /*#__PURE__*/
