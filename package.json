@@ -46,6 +46,10 @@
         "url": "https://github.com/FelixRilling/quercus/issues"
     },
     "homepage": "https://github.com/FelixRilling/quercus#readme",
+    "browserslist": [
+        "last 2 Chrome versions",
+        "last 2 Firefox versions"
+    ],
     "dependencies": {
         "lightdash": "^8.0.0"
     },
