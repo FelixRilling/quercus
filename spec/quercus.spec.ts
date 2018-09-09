@@ -1,6 +1,4 @@
-"use strict";
-
-const Quercus = require("../dist/quercus.common");
+import { Quercus } from "../src/quercus";
 
 describe("Empty", () => {
     const q = new Quercus();
