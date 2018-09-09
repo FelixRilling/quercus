@@ -2,26 +2,20 @@ var Quercus = (function () {
     'use strict';
 
     /**
-     * Checks if the value has a certain type-string.
+     * Checks if a value is an array.
      *
-     * @function isTypeOf
+     * Alias of the native `Array.isArray`.
+     *
+     * @function isArray
      * @memberof Is
      * @since 1.0.0
      * @param {any} val
-     * @param {string} type
      * @returns {boolean}
      * @example
-     * isTypeOf({}, "object")
+     * isArray([1, 2, 3]);
      * // => true
      *
-     * isTypeOf([], "object")
-     * // => true
-     *
-     * isTypeOf("foo", "string")
-     * // => true
-     *
-     * @example
-     * isTypeOf("foo", "number")
+     * isArray({});
      * // => false
      */
 
@@ -35,20 +29,10 @@ var Quercus = (function () {
      * @param {Class} target
      * @returns {boolean}
      * @example
-     * isInstanceOf({}, Object)
-     * // => true
-     *
-     * isInstanceOf([], Object)
-     * // => true
-     *
      * isInstanceOf([], Array)
      * // => true
      *
-     * @example
      * isInstanceOf({}, Array)
-     * // => false
-     *
-     * isInstanceOf([], Map)
      * // => false
      */
     const isInstanceOf = (val, target) => val instanceof target;
