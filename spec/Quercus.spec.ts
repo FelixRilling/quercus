@@ -1,4 +1,4 @@
-import { Quercus } from "../src/quercus";
+import { Quercus } from "src/Quercus";
 
 describe("Empty", () => {
     const q = new Quercus();
@@ -7,10 +7,10 @@ describe("Empty", () => {
         expect(q.size).toBe(0);
     });
 
-    it("Has Nonexisting", () => {
+    it("Has Nonexistent", () => {
         expect(q.hasPath(["foo"])).toBe(false);
     });
-    it("Get Nonexisting", () => {
+    it("Get Nonexistent", () => {
         expect(q.getPath(["foo"])).toBe(null);
     });
 });
@@ -31,10 +31,10 @@ describe("Simple", () => {
         expect(q.getPath(["foo"])).toBe("bar");
     });
 
-    it("Has Nonexisting", () => {
+    it("Has Nonexistent", () => {
         expect(q.hasPath(["foo", "bar"])).toBe(false);
     });
-    it("Get Nonexisting", () => {
+    it("Get Nonexistent", () => {
         expect(q.getPath(["foo", "bar"])).toBe(null);
     });
 });
@@ -75,17 +75,17 @@ describe("Normal", () => {
         expect(q.getPath(["bar", "boo", "baa", "bii", "bee"])).toBe(9);
     });
 
-    it("Has Nonexisting", () => {
+    it("Has Nonexistent", () => {
         expect(q.hasPath(["foo", "lorem"])).toBe(false);
     });
-    it("Get Nonexisting", () => {
+    it("Get Nonexistent", () => {
         expect(q.getPath(["foo", "lorem"])).toBe(null);
     });
 
-    it("Has Nonexisting Deep", () => {
+    it("Has Nonexistent Deep", () => {
         expect(q.hasPath(["bar", "boo", "baa", "a", "b", "c"])).toBe(false);
     });
-    it("Get Nonexisting Deep", () => {
+    it("Get Nonexistent Deep", () => {
         expect(q.getPath(["bar", "boo", "baa", "a", "b", "c"])).toBe(null);
     });
 });

@@ -1,1 +1,1 @@
-import "./quercus.spec.ts";
+import "./Quercus.spec.ts";

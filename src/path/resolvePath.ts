@@ -1,14 +1,6 @@
-import { Quercus } from "../quercus";
+import { Quercus } from "../Quercus";
+import { IResolvedPath } from "./IResolvedPath";
 
-type quercusPath = any[];
-type quercusPathEntry = [quercusPath, any];
-type quercusPathEntryInitializer = quercusPathEntry[];
-
-interface IResolvedPath {
-    readonly target: Quercus;
-    readonly key: any;
-    readonly success: boolean;
-}
 /**
  * Resolves path through Quercus instances.
  *
@@ -66,9 +58,4 @@ const resolvePath = (
     return { target, key, success };
 };
 
-export {
-    resolvePath,
-    quercusPath,
-    quercusPathEntry,
-    quercusPathEntryInitializer
-};
+export { resolvePath };

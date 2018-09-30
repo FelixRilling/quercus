@@ -1,3 +1,3 @@
-import { Quercus } from "./quercus";
+import { Quercus } from "./Quercus";
 
 export default Quercus;
