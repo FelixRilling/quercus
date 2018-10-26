@@ -1,33 +1,16 @@
 var Quercus = (function () {
     'use strict';
 
-    /**
-     * Checks if a value is an array.
-     *
-     * Alias of the native `Array.isArray`.
-     *
-     * @function isArray
-     * @memberof Is
-     * @since 1.0.0
-     * @param {any} val
-     * @returns {boolean}
-     * @example
-     * isArray([1, 2, 3]);
-     * // => true
-     *
-     * isArray({});
-     * // => false
-     */
+    // File is named "_index.ts" to avoid it being treated as a module index file.
 
     /**
      * Checks if the value is an instance of a target constructor.
      *
-     * @function isInstanceOf
      * @memberof Is
      * @since 1.0.0
-     * @param {any} val
-     * @param {Class} target
-     * @returns {boolean}
+     * @param {any} val Value to check.
+     * @param {Class} target Class to check if the value is an instance of it.
+     * @returns {boolean} If the value is an instance of the class.
      * @example
      * isInstanceOf([], Array)
      * // => true
