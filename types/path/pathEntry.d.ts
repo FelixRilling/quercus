@@ -1,3 +1,3 @@
-import { path } from "./path";
-declare type pathEntry = [path, any];
+import { pathArr } from "./pathArr";
+declare type pathEntry = [pathArr, any];
 export { pathEntry };

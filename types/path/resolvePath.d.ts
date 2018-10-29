@@ -5,10 +5,10 @@ import { IResolvedPath } from "./IResolvedPath";
  *
  * @private
  * @since 1.0.0
- * @param {Quercus} targetOld starting target for resolving.
- * @param {any[]} path path to resolve.
- * @param {boolean} [createMissing=false] if requested instances should be created if they don't exist.
- * @returns {object} resolved path object.
+ * @param {Quercus} targetOld Starting target for resolving.
+ * @param {any[]} path Path to resolve.
+ * @param {boolean} [createMissing=false] If requested instances should be created if they don't exist.
+ * @returns {object} Resolved path object.
  * @example
  * const q = new Quercus([["foo", "bar"], 5]);
  *

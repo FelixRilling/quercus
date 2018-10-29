@@ -1,8 +1,8 @@
 import { isInstanceOf } from "lightdash";
-import { resolvePath } from "./path/resolvePath";
-import { pathEntryInitializer } from "./path/pathEntryInitializer";
+import { pathArr } from "./path/pathArr";
 import { pathEntry } from "./path/pathEntry";
-import { path } from "./path/path";
+import { pathEntryInitializer } from "./path/pathEntryInitializer";
+import { resolvePath } from "./path/resolvePath";
 
 /**
  * Quercus main class.
@@ -17,8 +17,8 @@ class Quercus extends Map<any, Quercus | any> {
      *
      * @static
      * @since 1.0.0
-     * @param {any} val value to check.
-     * @returns {boolean} if the value is a Quercus instance.
+     * @param {any} val Value to check.
+     * @returns {boolean} If the value is a Quercus instance.
      * @example
      * const q = new Quercus([["foo", "bar"], 5]);
      *
@@ -36,7 +36,7 @@ class Quercus extends Map<any, Quercus | any> {
     }
 
     /**
-     * Quercus main class constructor.
+     * Quercus main constructor.
      *
      * @constructor
      * @since 1.0.0
@@ -54,13 +54,14 @@ class Quercus extends Map<any, Quercus | any> {
         pairArr.forEach((pair: pathEntry) => this.setPath(pair[0], pair[1]));
     }
 
+    // noinspection SpellCheckingInspection
     /**
      * Checks if a given path exists.
      *
      * @since 1.0.0
-     * @param {any[]} path path to check.
-     * @param {boolean} [quercusNodesAreTruthy=false] if nodes should be considered t be truthy.
-     * @returns {boolean} if the given path exists.
+     * @param {any[]} path Path to check.
+     * @param {boolean} [quercusNodesAreTruthy=false] If nodes should be considered to be truthy.
+     * @returns {boolean} If the given path exists.
      * @example
      * const q = new Quercus([
      *       [["foo", "bar"], 5],
@@ -77,7 +78,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.hasPath(["foo"], true);
      * // => true
      */
-    public hasPath(path: path, quercusNodesAreTruthy = false): boolean {
+    public hasPath(path: pathArr, quercusNodesAreTruthy = false): boolean {
         if (path.length === 0) {
             return quercusNodesAreTruthy;
         }
@@ -93,14 +94,15 @@ class Quercus extends Map<any, Quercus | any> {
         return false;
     }
 
+    // noinspection SpellCheckingInspection
     /**
      * Returns value of a given path.
      *
      * If the path could not be found, null is returned.
      *
      * @since 1.0.0
-     * @param {any[]} path path to get.
-     * @returns {any|null} value of the node, or null if it is not found.
+     * @param {any[]} path Path to get.
+     * @returns {any|null} Value of the node, or null if it is not found.
      * @example
      * const q = new Quercus([
      *       [["foo", "bar"], 5],
@@ -117,7 +119,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.getPath(["lorem"]);
      * // => null
      */
-    public getPath(path: path): any | null {
+    public getPath(path: pathArr): any | null {
         if (path.length === 0) {
             return this;
         }
@@ -127,6 +129,7 @@ class Quercus extends Map<any, Quercus | any> {
         return success && target.has(key) ? target.get(key) : null;
     }
 
+    // noinspection SpellCheckingInspection
     /**
      * Sets value of a given path.
      *
@@ -134,9 +137,9 @@ class Quercus extends Map<any, Quercus | any> {
      * If the value was set successfully, the value's Node is returned.
      *
      * @since 1.0.0
-     * @param {any[]} path path to set.
-     * @param {any} val value to set.
-     * @returns {Quercus|null} the node that was set on, or null if it could not be set.
+     * @param {any[]} path Path to set.
+     * @param {any} val Value to set.
+     * @returns {Quercus|null} Node that was set on, or null if it could not be set.
      * @example
      * const q = new Quercus();
      *
@@ -149,11 +152,10 @@ class Quercus extends Map<any, Quercus | any> {
      * q.setPath([], "foo");
      * // => null
      */
-    public setPath(path: path, val: any): Quercus | null {
+    public setPath(path: pathArr, val: any): Quercus | null {
         if (path.length === 0) {
             return null;
         }
-
         const { target, key } = resolvePath(this, path, true);
 
         target.set(key, val);

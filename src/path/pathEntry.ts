@@ -1,5 +1,5 @@
-import { path } from "./path";
+import { pathArr } from "./pathArr";
 
-type pathEntry = [path, any];
+type pathEntry = [pathArr, any];
 
 export { pathEntry };
