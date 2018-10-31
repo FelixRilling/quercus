@@ -1,6 +1,6 @@
 {
     "name": "quercus",
-    "version": "2.2.9",
+    "version": "2.2.10",
     "description": "Simple and dynamic tree data structures in TypeScript",
     "main": "dist/quercus.common.js",
     "module": "dist/quercus.esm.js",
