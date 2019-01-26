@@ -4,21 +4,25 @@ var Quercus = (function () {
     // File is named "_index.ts" to avoid it being treated as a module index file.
 
     /**
-     * Checks if the value is an instance of a target constructor.
+     * Checks if the value is an instance of any of the given classes.
+     * If at least one class gives back true, true is returned.
      *
      * @memberof Is
      * @since 1.0.0
      * @param {any} val Value to check.
-     * @param {Class} target Class to check if the value is an instance of it.
+     * @param {...Class} targets Classes to check.
      * @returns {boolean} If the value is an instance of the class.
      * @example
      * isInstanceOf([], Array)
      * // => true
      *
-     * isInstanceOf({}, Array)
+     * isInstanceOf([], Map, Set, Array)
+     * // => true
+     *
+     * isInstanceOf({}, Array, Set)
      * // => false
      */
-    const isInstanceOf = (val, target) => val instanceof target;
+    const isInstanceOf = (val, ...targets) => targets.some(target => val instanceof target);
 
     /**
      * Resolves path through Quercus instances.
