@@ -46,7 +46,6 @@ class Quercus extends Map {
         super();
         pairArr.forEach((pair) => this.setPath(pair[0], pair[1]));
     }
-    // noinspection SpellCheckingInspection
     /**
      * Checks if a given path exists.
      *
@@ -83,7 +82,6 @@ class Quercus extends Map {
         }
         return false;
     }
-    // noinspection SpellCheckingInspection
     /**
      * Returns value of a given path.
      *
@@ -115,7 +113,6 @@ class Quercus extends Map {
         const { target, key, success } = resolvePath(this, path);
         return success && target.has(key) ? target.get(key) : null;
     }
-    // noinspection SpellCheckingInspection
     /**
      * Sets value of a given path.
      *

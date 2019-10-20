@@ -1,5 +1,5 @@
 import { Quercus } from "../Quercus";
-import { IResolvedPath } from "./IResolvedPath";
+import { ResolvedPath } from "./ResolvedPath";
 
 /**
  * Resolves path through Quercus instances.
@@ -19,8 +19,8 @@ import { IResolvedPath } from "./IResolvedPath";
 const resolvePath = (
     targetOld: Quercus,
     path: any[],
-    createMissing: boolean = false
-): IResolvedPath => {
+    createMissing = false
+): ResolvedPath => {
     let target = targetOld;
     let key: any = path[0];
     let success = true;

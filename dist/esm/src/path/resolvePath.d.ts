@@ -1,5 +1,5 @@
 import { Quercus } from "../Quercus";
-import { IResolvedPath } from "./IResolvedPath";
+import { ResolvedPath } from "./ResolvedPath";
 /**
  * Resolves path through Quercus instances.
  *
@@ -15,6 +15,6 @@ import { IResolvedPath } from "./IResolvedPath";
  * resolvePath(q, ["foo", "bar"])
  * // => {target: Quercus{"bar": 5}, key: "bar", success: true}
  */
-declare const resolvePath: (targetOld: Quercus, path: any[], createMissing?: boolean) => IResolvedPath;
+declare const resolvePath: (targetOld: Quercus, path: any[], createMissing?: boolean) => ResolvedPath;
 export { resolvePath };
 //# sourceMappingURL=resolvePath.d.ts.map

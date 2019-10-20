@@ -1,6 +1,6 @@
-import { pathArr } from "./path/pathArr";
-import { pathEntry } from "./path/pathEntry";
-import { pathEntryInitializer } from "./path/pathEntryInitializer";
+import { PathArr } from "./path/PathArr";
+import { PathEntry } from "./path/PathEntry";
+import { PathEntryInitializer } from "./path/PathEntryInitializer";
 import { resolvePath } from "./path/resolvePath";
 
 /**
@@ -47,13 +47,12 @@ class Quercus extends Map<any, Quercus | any> {
      * // Tree initialized with a path-value pair
      * const q2 = new Quercus([["foo", bar], 5]);
      */
-    public constructor(pairArr: pathEntryInitializer = []) {
+    public constructor(pairArr: PathEntryInitializer = []) {
         super();
 
-        pairArr.forEach((pair: pathEntry) => this.setPath(pair[0], pair[1]));
+        pairArr.forEach((pair: PathEntry) => this.setPath(pair[0], pair[1]));
     }
 
-    // noinspection SpellCheckingInspection
     /**
      * Checks if a given path exists.
      *
@@ -77,7 +76,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.hasPath(["foo"], true);
      * // => true
      */
-    public hasPath(path: pathArr, quercusNodesAreTruthy = false): boolean {
+    public hasPath(path: PathArr, quercusNodesAreTruthy = false): boolean {
         if (path.length === 0) {
             return quercusNodesAreTruthy;
         }
@@ -93,7 +92,6 @@ class Quercus extends Map<any, Quercus | any> {
         return false;
     }
 
-    // noinspection SpellCheckingInspection
     /**
      * Returns value of a given path.
      *
@@ -118,7 +116,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.getPath(["lorem"]);
      * // => null
      */
-    public getPath(path: pathArr): any | null {
+    public getPath(path: PathArr): any | null {
         if (path.length === 0) {
             return this;
         }
@@ -128,7 +126,6 @@ class Quercus extends Map<any, Quercus | any> {
         return success && target.has(key) ? target.get(key) : null;
     }
 
-    // noinspection SpellCheckingInspection
     /**
      * Sets value of a given path.
      *
@@ -151,7 +148,7 @@ class Quercus extends Map<any, Quercus | any> {
      * q.setPath([], "foo");
      * // => null
      */
-    public setPath(path: pathArr, val: any): Quercus | null {
+    public setPath(path: PathArr, val: any): Quercus | null {
         if (path.length === 0) {
             return null;
         }

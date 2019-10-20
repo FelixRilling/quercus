@@ -1,4 +1,4 @@
-import { Quercus } from "src/Quercus";
+import { Quercus } from "../../src/Quercus";
 
 describe("Empty", () => {
     const q = new Quercus();

@@ -1,0 +1,1 @@
+{"version":3,"file":"ResolvedPath.d.ts","sourceRoot":"","sources":["../../../../src/path/ResolvedPath.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,YAAY,CAAC;AAErC,UAAU,YAAY;IAClB,QAAQ,CAAC,MAAM,EAAE,OAAO,CAAC;IACzB,QAAQ,CAAC,GAAG,EAAE,GAAG,CAAC;IAClB,QAAQ,CAAC,OAAO,EAAE,OAAO,CAAC;CAC7B;AAED,OAAO,EAAE,YAAY,EAAE,CAAC"}

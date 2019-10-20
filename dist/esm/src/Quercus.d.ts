@@ -1,5 +1,5 @@
-import { pathArr } from "./path/pathArr";
-import { pathEntryInitializer } from "./path/pathEntryInitializer";
+import { PathArr } from "./path/PathArr";
+import { PathEntryInitializer } from "./path/PathEntryInitializer";
 /**
  * Quercus main class.
  *
@@ -41,7 +41,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * // Tree initialized with a path-value pair
      * const q2 = new Quercus([["foo", bar], 5]);
      */
-    constructor(pairArr?: pathEntryInitializer);
+    constructor(pairArr?: PathEntryInitializer);
     /**
      * Checks if a given path exists.
      *
@@ -65,7 +65,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.hasPath(["foo"], true);
      * // => true
      */
-    hasPath(path: pathArr, quercusNodesAreTruthy?: boolean): boolean;
+    hasPath(path: PathArr, quercusNodesAreTruthy?: boolean): boolean;
     /**
      * Returns value of a given path.
      *
@@ -90,7 +90,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.getPath(["lorem"]);
      * // => null
      */
-    getPath(path: pathArr): any | null;
+    getPath(path: PathArr): any | null;
     /**
      * Sets value of a given path.
      *
@@ -113,7 +113,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.setPath([], "foo");
      * // => null
      */
-    setPath(path: pathArr, val: any): Quercus | null;
+    setPath(path: PathArr, val: any): Quercus | null;
 }
 export { Quercus };
 //# sourceMappingURL=Quercus.d.ts.map

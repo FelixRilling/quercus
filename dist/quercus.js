@@ -98,7 +98,6 @@ var Quercus = (function () {
             super();
             pairArr.forEach((pair) => this.setPath(pair[0], pair[1]));
         }
-        // noinspection SpellCheckingInspection
         /**
          * Checks if a given path exists.
          *
@@ -135,7 +134,6 @@ var Quercus = (function () {
             }
             return false;
         }
-        // noinspection SpellCheckingInspection
         /**
          * Returns value of a given path.
          *
@@ -167,7 +165,6 @@ var Quercus = (function () {
             const { target, key, success } = resolvePath(this, path);
             return success && target.has(key) ? target.get(key) : null;
         }
-        // noinspection SpellCheckingInspection
         /**
          * Sets value of a given path.
          *

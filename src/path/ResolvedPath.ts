@@ -1,9 +1,9 @@
 import { Quercus } from "../Quercus";
 
-interface IResolvedPath {
+interface ResolvedPath {
     readonly target: Quercus;
     readonly key: any;
     readonly success: boolean;
 }
 
-export { IResolvedPath };
+export { ResolvedPath };
