@@ -1,8 +1,6 @@
 var Quercus = (function () {
     'use strict';
 
-    // File is named "_index.ts" to avoid it being treated as a module index file.
-
     /**
      * Checks if the value is an instance of any of the given classes.
      * If at least one class gives back true, true is returned.
@@ -23,6 +21,12 @@ var Quercus = (function () {
      * // => false
      */
     const isInstanceOf = (val, ...targets) => targets.some(target => val instanceof target);
+
+    var Delimiters;
+    (function (Delimiters) {
+        Delimiters["KEBAB"] = "-";
+        Delimiters["SNAKE"] = "_";
+    })(Delimiters || (Delimiters = {}));
 
     /**
      * Resolves path through Quercus instances.

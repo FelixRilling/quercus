@@ -5,3 +5,4 @@ interface IResolvedPath {
     readonly success: boolean;
 }
 export { IResolvedPath };
+//# sourceMappingURL=IResolvedPath.d.ts.map

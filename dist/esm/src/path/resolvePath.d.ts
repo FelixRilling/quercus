@@ -17,3 +17,4 @@ import { IResolvedPath } from "./IResolvedPath";
  */
 declare const resolvePath: (targetOld: Quercus, path: any[], createMissing?: boolean) => IResolvedPath;
 export { resolvePath };
+//# sourceMappingURL=resolvePath.d.ts.map

@@ -116,3 +116,4 @@ declare class Quercus extends Map<any, Quercus | any> {
     setPath(path: pathArr, val: any): Quercus | null;
 }
 export { Quercus };
+//# sourceMappingURL=Quercus.d.ts.map
