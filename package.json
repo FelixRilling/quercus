@@ -1,65 +1,67 @@
 {
-  "name": "quercus",
-  "version": "2.2.10",
-  "description": "Simple and dynamic tree data structures in TypeScript",
-  "main": "./dist/quercus.common.js",
-  "module": "./dist/esm/src/main.js",
-  "types": "./dist/esm/src/main.d.ts",
-  "rollupOptions": {
-    "moduleName": "Quercus",
-    "outputName": "quercus",
-    "external": [
-      "lodash"
+    "name": "quercus",
+    "version": "2.2.10",
+    "description": "Simple and dynamic tree data structures in TypeScript",
+    "main": "./dist/quercus.common.js",
+    "module": "./dist/esm/src/main.js",
+    "types": "./dist/esm/src/main.d.ts",
+    "rollupOptions": {
+        "moduleName": "Quercus",
+        "outputName": "quercus",
+        "external": [
+            "lodash"
+        ],
+        "globals": {
+            "lodash": "_"
+        }
+    },
+    "scripts": {
+        "start": "npm run dist",
+        "dist": "npm-run-all clean lint build test docs",
+        "clean": "rimraf ./dist ./spec/dist ./docs",
+        "build": "npm-run-all build:tsc build:bundle",
+        "build:tsc": "tsc --build ./tsconfig.json",
+        "build:bundle": "rollup -c rollup.config.js",
+        "watch": "tsc --build ./tsconfig.json -w",
+        "lint": "eslint ./src/ ./spec/src/ --ext .ts",
+        "fix": "eslint ./src/ ./spec/src/ --ext .ts --fix",
+        "test": "jasmine",
+        "docs": "jsdoc -c jsdoc.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FelixRilling/quercus.git"
+    },
+    "keywords": [
+        "tree",
+        "data-structure"
     ],
-    "globals": {
-      "lodash": "_"
+    "author": "Felix Rilling",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/FelixRilling/quercus/issues"
+    },
+    "homepage": "https://github.com/FelixRilling/quercus#readme",
+    "dependencies": {
+        "@types/lodash": "^4.14.136",
+        "lodash": "^4.17.15",
+        "lightdash": "^11.1.1"
+    },
+    "devDependencies": {
+        "@types/jasmine": "^3.4.4",
+        "@typescript-eslint/eslint-plugin": "^2.4.0",
+        "@typescript-eslint/parser": "^2.4.0",
+        "docdash": "^1.1.1",
+        "eslint": "^6.5.1",
+        "eslint-config-prettier": "^6.4.0",
+        "eslint-plugin-prettier": "^3.1.1",
+        "jasmine": "^3.5.0",
+        "jsdoc": "^3.6.3",
+        "npm-run-all": "^4.1.5",
+        "prettier": "^1.18.2",
+        "rimraf": "^3.0.0",
+        "rollup": "^1.25.0",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "typescript": "^3.6.4"
     }
-  },
-  "scripts": {
-    "start": "npm run dist",
-    "dist": "npm-run-all clean lint build test docs",
-    "clean": "rimraf ./dist ./spec/dist ./docs",
-    "build": "npm-run-all build:tsc build:bundle",
-    "build:tsc": "tsc --build ./tsconfig.json",
-    "build:bundle": "rollup -c rollup.config.js",
-    "watch": "tsc --build ./tsconfig.json -w",
-    "lint": "eslint ./src/ ./spec/src/ --ext .ts",
-    "fix": "eslint ./src/ ./spec/src/ --ext .ts --fix",
-    "test": "jasmine",
-    "docs": "jsdoc -c jsdoc.json"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FelixRilling/quercus.git"
-  },
-  "keywords": [
-    "tree",
-    "data-structure"
-  ],
-  "author": "Felix Rilling",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/FelixRilling/quercus/issues"
-  },
-  "homepage": "https://github.com/FelixRilling/quercus#readme",
-  "dependencies": {
-    "lightdash": "^10.2.2"
-  },
-  "devDependencies": {
-    "@types/jasmine": "^3.4.4",
-    "@typescript-eslint/eslint-plugin": "^2.4.0",
-    "@typescript-eslint/parser": "^2.4.0",
-    "docdash": "^1.1.1",
-    "eslint": "^6.5.1",
-    "eslint-config-prettier": "^6.4.0",
-    "eslint-plugin-prettier": "^3.1.1",
-    "jasmine": "^3.5.0",
-    "jsdoc": "^3.6.3",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^1.18.2",
-    "rimraf": "^3.0.0",
-    "rollup": "^1.25.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "typescript": "^3.6.4"
-  }
 }

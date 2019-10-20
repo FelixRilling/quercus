@@ -1,4 +1,3 @@
-import { isInstanceOf } from "lightdash";
 import { resolvePath } from "./path/resolvePath";
 /**
  * Quercus main class.
@@ -28,7 +27,7 @@ class Quercus extends Map {
      * // => false
      */
     static isQuercus(val) {
-        return isInstanceOf(val, Quercus);
+        return val instanceof Quercus;
     }
     /**
      * Quercus main constructor.

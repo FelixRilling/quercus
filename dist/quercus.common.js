@@ -1,33 +1,6 @@
 'use strict';
 
 /**
- * Checks if the value is an instance of any of the given classes.
- * If at least one class gives back true, true is returned.
- *
- * @memberof Is
- * @since 1.0.0
- * @param {any} val Value to check.
- * @param {...Class} targets Classes to check.
- * @returns {boolean} If the value is an instance of the class.
- * @example
- * isInstanceOf([], Array)
- * // => true
- *
- * isInstanceOf([], Map, Set, Array)
- * // => true
- *
- * isInstanceOf({}, Array, Set)
- * // => false
- */
-const isInstanceOf = (val, ...targets) => targets.some(target => val instanceof target);
-
-var Delimiters;
-(function (Delimiters) {
-    Delimiters["KEBAB"] = "-";
-    Delimiters["SNAKE"] = "_";
-})(Delimiters || (Delimiters = {}));
-
-/**
  * Resolves path through Quercus instances.
  *
  * @private
@@ -105,7 +78,7 @@ class Quercus extends Map {
      * // => false
      */
     static isQuercus(val) {
-        return isInstanceOf(val, Quercus);
+        return val instanceof Quercus;
     }
     /**
      * Quercus main constructor.

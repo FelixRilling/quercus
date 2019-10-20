@@ -1,4 +1,3 @@
-import { isInstanceOf } from "lightdash";
 import { pathArr } from "./path/pathArr";
 import { pathEntry } from "./path/pathEntry";
 import { pathEntryInitializer } from "./path/pathEntryInitializer";
@@ -32,7 +31,7 @@ class Quercus extends Map<any, Quercus | any> {
      * // => false
      */
     public static isQuercus(val: any): boolean {
-        return isInstanceOf(val, Quercus);
+        return val instanceof Quercus;
     }
 
     /**
