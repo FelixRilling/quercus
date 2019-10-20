@@ -1,18 +1,17 @@
-import { Quercus } from "../Quercus";
 /**
  * Resolves path through Quercus instances.
  *
  * @private
  * @since 1.0.0
- * @param {Quercus} targetOld Starting target for resolving.
+ * @param {Tree} targetOld Starting target for resolving.
  * @param {any[]} path Path to resolve.
  * @param {boolean} [createMissing=false] If requested instances should be created if they don't exist.
  * @returns {object} Resolved path object.
  * @example
- * const q = new Quercus([["foo", "bar"], 5]);
+ * const q = new Tree([["foo", "bar"], 5]);
  *
  * resolvePath(q, ["foo", "bar"])
- * // => {target: Quercus{"bar": 5}, key: "bar", success: true}
+ * // => {target: Tree{"bar": 5}, key: "bar", success: true}
  */
 const resolvePath = (targetOld, path, createMissing = false) => {
     let target = targetOld;
@@ -28,12 +27,12 @@ const resolvePath = (targetOld, path, createMissing = false) => {
          *             true  -> Create a new Quercus, assign it and set it on the parent.
          *             false -> Declare unsuccessful, abort.
          */
-        if (targetOld.has(key) && Quercus.isQuercus(sub)) {
+        if (targetOld.has(key) && targetOld.isTree(sub)) {
             target = sub;
         }
         else {
             if (createMissing) {
-                target = new Quercus();
+                target = targetOld.createSubTree();
                 targetOld.set(key, target);
             }
             else {

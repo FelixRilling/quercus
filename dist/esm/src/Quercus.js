@@ -8,28 +8,6 @@ import { resolvePath } from "./path/resolvePath";
  */
 class Quercus extends Map {
     /**
-     * Checks if a value is a Quercus instance.
-     *
-     * @static
-     * @since 1.0.0
-     * @param {any} val Value to check.
-     * @returns {boolean} If the value is a Quercus instance.
-     * @example
-     * const q = new Quercus([["foo", "bar"], 5]);
-     *
-     * Quercus.isQuercus(q)
-     * // => true
-     *
-     * Quercus.isQuercus(q.getPath(["foo"]))
-     * // => true
-     *
-     * Quercus.isQuercus("foo")
-     * // => false
-     */
-    static isQuercus(val) {
-        return val instanceof Quercus;
-    }
-    /**
      * Quercus main constructor.
      *
      * @constructor
@@ -44,7 +22,9 @@ class Quercus extends Map {
      */
     constructor(pairArr = []) {
         super();
-        pairArr.forEach((pair) => this.setPath(pair[0], pair[1]));
+        for (const [path, val] of pairArr) {
+            this.setPath(path, val);
+        }
     }
     /**
      * Checks if a given path exists.
@@ -76,7 +56,7 @@ class Quercus extends Map {
         const { target, key, success } = resolvePath(this, path);
         if (success && target.has(key)) {
             if (!quercusNodesAreTruthy) {
-                return !Quercus.isQuercus(target.get(key));
+                return !this.isTree(target.get(key));
             }
             return true;
         }
@@ -111,7 +91,10 @@ class Quercus extends Map {
             return this;
         }
         const { target, key, success } = resolvePath(this, path);
-        return success && target.has(key) ? target.get(key) : null;
+        if (success && target.has(key)) {
+            return target.get(key);
+        }
+        return null;
     }
     /**
      * Sets value of a given path.
@@ -142,6 +125,12 @@ class Quercus extends Map {
         const { target, key } = resolvePath(this, path, true);
         target.set(key, val);
         return target;
+    }
+    isTree(val) {
+        return val instanceof Quercus;
+    }
+    createSubTree() {
+        return new Quercus();
     }
 }
 export { Quercus };

@@ -6,15 +6,15 @@ var Quercus = (function () {
      *
      * @private
      * @since 1.0.0
-     * @param {Quercus} targetOld Starting target for resolving.
+     * @param {Tree} targetOld Starting target for resolving.
      * @param {any[]} path Path to resolve.
      * @param {boolean} [createMissing=false] If requested instances should be created if they don't exist.
      * @returns {object} Resolved path object.
      * @example
-     * const q = new Quercus([["foo", "bar"], 5]);
+     * const q = new Tree([["foo", "bar"], 5]);
      *
      * resolvePath(q, ["foo", "bar"])
-     * // => {target: Quercus{"bar": 5}, key: "bar", success: true}
+     * // => {target: Tree{"bar": 5}, key: "bar", success: true}
      */
     const resolvePath = (targetOld, path, createMissing = false) => {
         let target = targetOld;
@@ -30,12 +30,12 @@ var Quercus = (function () {
              *             true  -> Create a new Quercus, assign it and set it on the parent.
              *             false -> Declare unsuccessful, abort.
              */
-            if (targetOld.has(key) && Quercus.isQuercus(sub)) {
+            if (targetOld.has(key) && targetOld.isTree(sub)) {
                 target = sub;
             }
             else {
                 if (createMissing) {
-                    target = new Quercus();
+                    target = targetOld.createSubTree();
                     targetOld.set(key, target);
                 }
                 else {
@@ -60,28 +60,6 @@ var Quercus = (function () {
      */
     class Quercus extends Map {
         /**
-         * Checks if a value is a Quercus instance.
-         *
-         * @static
-         * @since 1.0.0
-         * @param {any} val Value to check.
-         * @returns {boolean} If the value is a Quercus instance.
-         * @example
-         * const q = new Quercus([["foo", "bar"], 5]);
-         *
-         * Quercus.isQuercus(q)
-         * // => true
-         *
-         * Quercus.isQuercus(q.getPath(["foo"]))
-         * // => true
-         *
-         * Quercus.isQuercus("foo")
-         * // => false
-         */
-        static isQuercus(val) {
-            return val instanceof Quercus;
-        }
-        /**
          * Quercus main constructor.
          *
          * @constructor
@@ -96,7 +74,9 @@ var Quercus = (function () {
          */
         constructor(pairArr = []) {
             super();
-            pairArr.forEach((pair) => this.setPath(pair[0], pair[1]));
+            for (const [path, val] of pairArr) {
+                this.setPath(path, val);
+            }
         }
         /**
          * Checks if a given path exists.
@@ -128,7 +108,7 @@ var Quercus = (function () {
             const { target, key, success } = resolvePath(this, path);
             if (success && target.has(key)) {
                 if (!quercusNodesAreTruthy) {
-                    return !Quercus.isQuercus(target.get(key));
+                    return !this.isTree(target.get(key));
                 }
                 return true;
             }
@@ -163,7 +143,10 @@ var Quercus = (function () {
                 return this;
             }
             const { target, key, success } = resolvePath(this, path);
-            return success && target.has(key) ? target.get(key) : null;
+            if (success && target.has(key)) {
+                return target.get(key);
+            }
+            return null;
         }
         /**
          * Sets value of a given path.
@@ -194,6 +177,12 @@ var Quercus = (function () {
             const { target, key } = resolvePath(this, path, true);
             target.set(key, val);
             return target;
+        }
+        isTree(val) {
+            return val instanceof Quercus;
+        }
+        createSubTree() {
+            return new Quercus();
         }
     }
 

@@ -19,7 +19,7 @@ npm install quercus
 ### Example
 
 ```typescript
-import {Quercus} from "quercus";
+import { Quercus } from "quercus";
 
 const tree = new Quercus();
 
@@ -43,7 +43,7 @@ Creates a tree like this:
 You could also create the paths in the constructor:
 
 ```typescript
-import {Quercus} from "quercus";
+import { Quercus } from "quercus";
 
 const tree = new Quercus([
     [["foo", "bar"], 5],

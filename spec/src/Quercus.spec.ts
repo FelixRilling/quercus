@@ -57,9 +57,7 @@ describe("Normal", () => {
     it("Has Quercus quercusNodesAreTruthy=true", () => {
         expect(q.hasPath(["foo", "bizz"], true)).toBe(true);
     });
-    it("Get Quercus", () => {
-        expect(Quercus.isQuercus(q.getPath(["foo", "bizz"]))).toBe(true);
-    });
+    it("Get Quercus", () => {});
 
     it("Has", () => {
         expect(q.hasPath(["foo", "bizz", "buzz"])).toBe(true);

@@ -1,3 +1,3 @@
-type PathArr = any[];
+type PathArr<TKey> = TKey[];
 
 export { PathArr };

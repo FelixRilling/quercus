@@ -1,5 +1,6 @@
 import { PathArr } from "./path/PathArr";
 import { PathEntryInitializer } from "./path/PathEntryInitializer";
+import { Tree } from "./Tree";
 /**
  * Quercus main class.
  *
@@ -7,27 +8,7 @@ import { PathEntryInitializer } from "./path/PathEntryInitializer";
  * @since 1.0.0
  * @extends Map
  */
-declare class Quercus extends Map<any, Quercus | any> {
-    /**
-     * Checks if a value is a Quercus instance.
-     *
-     * @static
-     * @since 1.0.0
-     * @param {any} val Value to check.
-     * @returns {boolean} If the value is a Quercus instance.
-     * @example
-     * const q = new Quercus([["foo", "bar"], 5]);
-     *
-     * Quercus.isQuercus(q)
-     * // => true
-     *
-     * Quercus.isQuercus(q.getPath(["foo"]))
-     * // => true
-     *
-     * Quercus.isQuercus("foo")
-     * // => false
-     */
-    static isQuercus(val: any): boolean;
+declare class Quercus<TKey, UValue> extends Map<TKey, UValue | Tree<TKey, UValue> | null> implements Tree<TKey, UValue> {
     /**
      * Quercus main constructor.
      *
@@ -41,7 +22,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * // Tree initialized with a path-value pair
      * const q2 = new Quercus([["foo", bar], 5]);
      */
-    constructor(pairArr?: PathEntryInitializer);
+    constructor(pairArr?: PathEntryInitializer<TKey, UValue>);
     /**
      * Checks if a given path exists.
      *
@@ -65,7 +46,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.hasPath(["foo"], true);
      * // => true
      */
-    hasPath(path: PathArr, quercusNodesAreTruthy?: boolean): boolean;
+    hasPath(path: PathArr<TKey>, quercusNodesAreTruthy?: boolean): boolean;
     /**
      * Returns value of a given path.
      *
@@ -90,7 +71,7 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.getPath(["lorem"]);
      * // => null
      */
-    getPath(path: PathArr): any | null;
+    getPath(path: PathArr<TKey>): Quercus<TKey, UValue> | UValue | null;
     /**
      * Sets value of a given path.
      *
@@ -113,7 +94,9 @@ declare class Quercus extends Map<any, Quercus | any> {
      * q.setPath([], "foo");
      * // => null
      */
-    setPath(path: PathArr, val: any): Quercus | null;
+    setPath(path: PathArr<TKey>, val: any): Quercus<TKey, UValue> | null;
+    isTree(val: any): val is Tree<TKey, UValue>;
+    createSubTree(): Tree<TKey, UValue>;
 }
 export { Quercus };
 //# sourceMappingURL=Quercus.d.ts.map

@@ -1,8 +1,8 @@
-import { Quercus } from "../Quercus";
+import { Tree } from "../Tree";
 
-interface ResolvedPath {
-    readonly target: Quercus;
-    readonly key: any;
+interface ResolvedPath<TKey, UValue> {
+    readonly target: Tree<TKey, UValue>;
+    readonly key: TKey;
     readonly success: boolean;
 }
 

@@ -1,5 +1,5 @@
 import { PathArr } from "./PathArr";
 
-type PathEntry = [PathArr, any];
+type PathEntry<TKey, TValue> = [PathArr<TKey>, TValue];
 
 export { PathEntry };
