@@ -1,11 +1,10 @@
 # Quercus
 
-> Simple and dynamic tree data structures in TypeScript
+> Dynamic tree data structures in TypeScript
 
 ## Introduction
 
-Quercus allows you to create tree data structures of any size and depth.
-The `Quercus` class extends `Map`,meaning you can use methods like `forEach` or `values` on it.
+Quercus allows you to create dynamic tree data structures of any size and depth.
 Even though the examples use strings as path items, any data type accepted as a Map key can be used.
 
 **[Docs](https://felixrilling.github.io/quercus/)**
@@ -19,10 +18,9 @@ npm install quercus
 ### Example
 
 ```typescript
-import { Quercus } from "quercus";
+import { NestedMapTree } from "quercus";
 
-const tree = new Quercus();
-
+const tree = new NestedMapTree<string, number>();
 tree.setPath(["foo", "bar"], 5);
 tree.setPath(["foo", "bizz"], 12);
 tree.setPath(["bar", "fazz"], 560);
@@ -40,14 +38,55 @@ Creates a tree like this:
      5   12    560
 ```
 
-You could also create the paths in the constructor:
+Nodes can be checked and retrieved using `hasPath` and `getPath`.
 
 ```typescript
-import { Quercus } from "quercus";
+import { LookupStrategy, NestedMapTree } from "quercus";
 
-const tree = new Quercus([
-    [["foo", "bar"], 5],
-    [["foo", "bizz"], 12],
-    [["bar", "fazz"], 560]
-]);
+const tree = new NestedMapTree<string, number>();
+tree.setPath(["foo", "bar"], 5);
+tree.setPath(["foo", "bizz"], 12);
+tree.setPath(["bar", "fazz"], 560);
+
+console.log(`foo->bar: ${tree.hasPath(["foo", "bar"])}`); // "foo->bar: true"
+console.log(`bar: ${tree.hasPath(["bar"])}`); // "bar: true"
+console.log(`lorem: ${tree.hasPath(["lorem"])}`); // "lorem: false"
+
+console.log(
+    `foo->bar: ${tree.hasPath(
+        ["foo", "bar"],
+        LookupStrategy.EXISTENCE_BY_VALUE
+    )}`
+); // "foo->bar: true"
+console.log(`bar: ${tree.hasPath(["bar"], LookupStrategy.EXISTENCE_BY_VALUE)}`); // "bar: false"
+console.log(
+    `lorem: ${tree.hasPath(["lorem"], LookupStrategy.EXISTENCE_BY_VALUE)}`
+); // "lorem: false"
+```
+
+```typescript
+import { NestedMapTree } from "quercus";
+
+const tree = new NestedMapTree<string, number>();
+tree.setPath(["foo", "bar"], 5);
+tree.setPath(["foo", "bizz"], 12);
+tree.setPath(["bar", "fazz"], 560);
+
+/*
+ *    {
+ *        node: { value: 5, map: new Map() },
+ *        matchedPath: ["foo", "bar"],
+ *        trailingPath: []
+ *    };
+ */
+tree.getPath(["foo", "bar"]);
+
+/*
+ *    {
+ *        node: null,
+ *        matchedPath: ["foo"],
+ *        trailingPath: ["lorem"]
+ *    };
+ */
+tree.getPath(["foo", "lorem"]);
 ```

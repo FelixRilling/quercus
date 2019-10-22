@@ -1,6 +1,11 @@
+/**
+ * Interface defining a single node containing a value and a map of sub-nodes.
+ *
+ * @public
+ */
 interface TreeNode<TKey, UValue> {
     value: UValue | null;
-    map: Map<TKey, TreeNode<TKey, UValue>>;
+    readonly map: Map<TKey, TreeNode<TKey, UValue>>;
 }
 export { TreeNode };
 //# sourceMappingURL=TreeNode.d.ts.map

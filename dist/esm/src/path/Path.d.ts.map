@@ -1,1 +1,1 @@
-{"version":3,"file":"Path.d.ts","sourceRoot":"","sources":["../../../../src/path/Path.ts"],"names":[],"mappings":"AAAA,aAAK,IAAI,CAAC,IAAI,IAAI,IAAI,EAAE,CAAC;AAEzB,OAAO,EAAE,IAAI,EAAE,CAAC"}
+{"version":3,"file":"Path.d.ts","sourceRoot":"","sources":["../../../../src/path/Path.ts"],"names":[],"mappings":"AAAA;;;;GAIG;AACH,aAAK,IAAI,CAAC,IAAI,IAAI,IAAI,EAAE,CAAC;AAEzB,OAAO,EAAE,IAAI,EAAE,CAAC"}
