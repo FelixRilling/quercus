@@ -6,7 +6,7 @@
     "module": "./dist/esm/src/main.js",
     "types": "./dist/esm/src/main.d.ts",
     "rollupOptions": {
-        "moduleName": "Quercus",
+        "moduleName": "quercus",
         "outputName": "quercus",
         "external": [
             "lodash"

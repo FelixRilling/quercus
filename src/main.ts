@@ -1,3 +1,4 @@
-import { Quercus } from "./Quercus";
+import { NestedMapTree } from "./tree/NestedMapTree";
+import { LookupStrategy } from "./lookup/LookupStrategy";
 
-export default Quercus;
+export { NestedMapTree, LookupStrategy };

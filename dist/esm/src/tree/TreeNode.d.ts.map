@@ -1,0 +1,1 @@
+{"version":3,"file":"TreeNode.d.ts","sourceRoot":"","sources":["../../../../src/tree/TreeNode.ts"],"names":[],"mappings":"AAAA,UAAU,QAAQ,CAAC,IAAI,EAAE,MAAM;IAC3B,KAAK,EAAE,MAAM,GAAG,IAAI,CAAC;IACrB,GAAG,EAAE,GAAG,CAAC,IAAI,EAAE,QAAQ,CAAC,IAAI,EAAE,MAAM,CAAC,CAAC,CAAC;CAC1C;AAED,OAAO,EAAE,QAAQ,EAAE,CAAC"}

@@ -1,20 +1,6 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var lodash = require('lodash');
-
-(function (LookupStrategy) {
-    LookupStrategy[LookupStrategy["EXISTENCE_BY_NODE"] = 0] = "EXISTENCE_BY_NODE";
-    LookupStrategy[LookupStrategy["EXISTENCE_BY_VALUE"] = 1] = "EXISTENCE_BY_VALUE";
-})(exports.LookupStrategy || (exports.LookupStrategy = {}));
-
-var ResolverStrategy;
-(function (ResolverStrategy) {
-    ResolverStrategy[ResolverStrategy["RETURN_ON_MISSING"] = 0] = "RETURN_ON_MISSING";
-    ResolverStrategy[ResolverStrategy["CREATE_MISSING"] = 1] = "CREATE_MISSING";
-})(ResolverStrategy || (ResolverStrategy = {}));
-
+import { isEmpty, isNil } from "lodash";
+import { LookupStrategy } from "../lookup/LookupStrategy";
+import { ResolverStrategy } from "./ResolverStrategy";
 class NestedMapTree {
     constructor() {
         this.node = this.createNode();
@@ -25,16 +11,16 @@ class NestedMapTree {
         const node = lookupResult.node;
         node.value = value;
     }
-    hasPath(path, lookupStrategy = exports.LookupStrategy.EXISTENCE_BY_NODE) {
+    hasPath(path, lookupStrategy = LookupStrategy.EXISTENCE_BY_NODE) {
         this.validatePath(path);
         const lookupResult = this.resolve(path, ResolverStrategy.RETURN_ON_MISSING);
-        if (lodash.isNil(lookupResult.node)) {
+        if (isNil(lookupResult.node)) {
             return false;
         }
-        if (lookupStrategy === exports.LookupStrategy.EXISTENCE_BY_NODE) {
+        if (lookupStrategy === LookupStrategy.EXISTENCE_BY_NODE) {
             return true;
         }
-        return !lodash.isNil(lookupResult.node.value);
+        return !isNil(lookupResult.node.value);
     }
     getPath(path) {
         this.validatePath(path);
@@ -70,11 +56,10 @@ class NestedMapTree {
         return { value: null, map: new Map() };
     }
     validatePath(path) {
-        if (lodash.isEmpty(path)) {
+        if (isEmpty(path)) {
             throw new TypeError("Path may not be empty.");
         }
     }
 }
-
-exports.NestedMapTree = NestedMapTree;
-//# sourceMappingURL=quercus.common.js.map
+export { NestedMapTree };
+//# sourceMappingURL=NestedMapTree.js.map
