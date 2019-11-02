@@ -34,14 +34,14 @@ declare class TreeNode<TKey, UValue> {
      */
     getPath(path: PathArr<TKey>): LookupResult<TKey, UValue>;
     /**
-     * Sets a value for a given path.
+     * Sets a value or node for a given path.
      * Middle nodes will be created automatically.
      *
      * @public
      * @param path Path to set the value for. May not be empty.
-     * @param value Value to set.
+     * @param value Value or node to set.
      */
-    setPath(path: PathArr<TKey>, value: UValue): void;
+    setPath(path: PathArr<TKey>, value: UValue | TreeNode<TKey, UValue>): void;
     /**
      * Resolves the path against this tree.
      *

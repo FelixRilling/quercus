@@ -12,6 +12,18 @@ describe("TreeNode", () => {
                     err instanceof TypeError
             );
         });
+
+        it("does not throw when everything works", () => {
+            const tree = new TreeNode<string, number>();
+
+            expect(() => tree.setPath(["foo"], 1)).not.toThrow();
+        });
+
+        it("with node does not throw when everything works", () => {
+            const tree = new TreeNode<string, number>();
+
+            expect(() => tree.setPath(["foo"], new TreeNode())).not.toThrow();
+        });
     });
 
     describe("hasPath", () => {

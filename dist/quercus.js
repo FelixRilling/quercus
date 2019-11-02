@@ -66,18 +66,22 @@ var Quercus = (function (exports, lodash) {
             return this.resolvePath(path, 0 /* RETURN_ON_MISSING */);
         }
         /**
-         * Sets a value for a given path.
+         * Sets a value or node for a given path.
          * Middle nodes will be created automatically.
          *
          * @public
          * @param path Path to set the value for. May not be empty.
-         * @param value Value to set.
+         * @param value Value or node to set.
          */
         setPath(path, value) {
             this.validatePath(path);
             const lookupResult = this.resolvePath(path, 1 /* CREATE_MISSING */);
-            const node = lookupResult.node;
-            node.value = value;
+            if (value instanceof TreeNode) {
+                lookupResult.parent.node.paths.set(lookupResult.parent.key, value);
+            }
+            else {
+                lookupResult.node.value = value;
+            }
         }
         /**
          * Resolves the path against this tree.

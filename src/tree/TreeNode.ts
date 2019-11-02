@@ -84,23 +84,28 @@ class TreeNode<TKey, UValue> {
     }
 
     /**
-     * Sets a value for a given path.
+     * Sets a value or node for a given path.
      * Middle nodes will be created automatically.
      *
      * @public
      * @param path Path to set the value for. May not be empty.
-     * @param value Value to set.
+     * @param value Value or node to set.
      */
-    public setPath(path: PathArr<TKey>, value: UValue): void {
+    public setPath(
+        path: PathArr<TKey>,
+        value: UValue | TreeNode<TKey, UValue>
+    ): void {
         this.validatePath(path);
 
         const lookupResult = this.resolvePath(
             path,
             ResolverStrategy.CREATE_MISSING
         );
-        const node: TreeNode<TKey, UValue> = lookupResult.node!;
-
-        node.value = value;
+        if (value instanceof TreeNode) {
+            lookupResult.parent.node.paths.set(lookupResult.parent.key, value);
+        } else {
+            lookupResult.node!.value = value;
+        }
     }
 
     /**
