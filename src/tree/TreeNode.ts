@@ -2,7 +2,6 @@ import { isEmpty, isNil } from "lodash";
 import { LookupStrategy } from "../lookup/LookupStrategy";
 import { LookupResult } from "../lookup/LookupResult";
 import { PathArr } from "../path/PathArr";
-import { LookupResultParent } from "../lookup/LookupResultParent";
 
 /**
  * Strategy to use when resolving tree nodes internally.
@@ -22,28 +21,6 @@ const enum ResolverStrategy {
      */
     CREATE_MISSING
 }
-
-/**
- * Helper method for parent result creation.
- *
- *
- * @private
- * @param previousNode Previous node.
- * @param key Key used.
- * @return Parent lookup result.
- */
-const createParentResult = <TKey, UValue>(
-    previousNode: TreeNode<TKey, UValue> | null,
-    key: TKey
-): LookupResultParent<TKey, UValue> | null => {
-    if (isNil(previousNode)) {
-        return null;
-    }
-    return {
-        node: previousNode,
-        key
-    };
-};
 
 /**
  * Default implementation of a tree, using nested maps.
@@ -132,14 +109,12 @@ class TreeNode<TKey, UValue> {
      * @private
      * @param path Path to resolve
      * @param resolverStrategy Strategy to use for non-existent nodes.
-     * @param previousNode Only used for recursive calls. Node the resolving was delegated from.
      * @param previousPath Only used for recursive calls. Path the resolving was delegated from.
      * @return Lookup result.
      */
     private resolvePath(
         path: PathArr<TKey>,
         resolverStrategy: ResolverStrategy,
-        previousNode: TreeNode<TKey, UValue> | null = null,
         previousPath: PathArr<TKey> = []
     ): LookupResult<TKey, UValue> {
         const key = path[0];
@@ -148,7 +123,10 @@ class TreeNode<TKey, UValue> {
             if (resolverStrategy !== ResolverStrategy.CREATE_MISSING) {
                 return {
                     node: null,
-                    parent: createParentResult(previousNode, key),
+                    parent: {
+                        node: this,
+                        key
+                    },
                     matchedPath: previousPath,
                     trailingPath: path
                 };
@@ -166,19 +144,17 @@ class TreeNode<TKey, UValue> {
         if (path.length === 1) {
             return {
                 node,
-                parent: createParentResult(previousNode, key),
+                parent: {
+                    node: this,
+                    key
+                },
                 matchedPath: previousPathNew,
                 trailingPath: []
             };
         }
 
         const nextPath = path.slice(1);
-        return node.resolvePath(
-            nextPath,
-            resolverStrategy,
-            this,
-            previousPathNew
-        );
+        return node.resolvePath(nextPath, resolverStrategy, previousPathNew);
     }
 
     /**

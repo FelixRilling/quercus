@@ -23,24 +23,6 @@ var lodash = require('lodash');
 })(exports.LookupStrategy || (exports.LookupStrategy = {}));
 
 /**
- * Helper method for parent result creation.
- *
- *
- * @private
- * @param previousNode Previous node.
- * @param key Key used.
- * @return Parent lookup result.
- */
-const createParentResult = (previousNode, key) => {
-    if (lodash.isNil(previousNode)) {
-        return null;
-    }
-    return {
-        node: previousNode,
-        key
-    };
-};
-/**
  * Default implementation of a tree, using nested maps.
  *
  * @public
@@ -106,18 +88,20 @@ class TreeNode {
      * @private
      * @param path Path to resolve
      * @param resolverStrategy Strategy to use for non-existent nodes.
-     * @param previousNode Only used for recursive calls. Node the resolving was delegated from.
      * @param previousPath Only used for recursive calls. Path the resolving was delegated from.
      * @return Lookup result.
      */
-    resolvePath(path, resolverStrategy, previousNode = null, previousPath = []) {
+    resolvePath(path, resolverStrategy, previousPath = []) {
         const key = path[0];
         let node;
         if (!this.paths.has(key)) {
             if (resolverStrategy !== 1 /* CREATE_MISSING */) {
                 return {
                     node: null,
-                    parent: createParentResult(previousNode, key),
+                    parent: {
+                        node: this,
+                        key
+                    },
                     matchedPath: previousPath,
                     trailingPath: path
                 };
@@ -133,13 +117,16 @@ class TreeNode {
         if (path.length === 1) {
             return {
                 node,
-                parent: createParentResult(previousNode, key),
+                parent: {
+                    node: this,
+                    key
+                },
                 matchedPath: previousPathNew,
                 trailingPath: []
             };
         }
         const nextPath = path.slice(1);
-        return node.resolvePath(nextPath, resolverStrategy, this, previousPathNew);
+        return node.resolvePath(nextPath, resolverStrategy, previousPathNew);
     }
     /**
      * Validates a given path.

@@ -48,7 +48,6 @@ declare class TreeNode<TKey, UValue> {
      * @private
      * @param path Path to resolve
      * @param resolverStrategy Strategy to use for non-existent nodes.
-     * @param previousNode Only used for recursive calls. Node the resolving was delegated from.
      * @param previousPath Only used for recursive calls. Path the resolving was delegated from.
      * @return Lookup result.
      */
