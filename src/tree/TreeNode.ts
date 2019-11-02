@@ -1,26 +1,27 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var lodash = require('lodash');
+import { isEmpty, isNil } from "lodash";
+import { LookupStrategy } from "../lookup/LookupStrategy";
+import { LookupResult } from "../lookup/LookupResult";
+import { PathArr } from "../path/PathArr";
+import { LookupResultParent } from "../lookup/LookupResultParent";
 
 /**
- * Strategy to use when checking for a paths existence in a tree.
- * The strategy is used to check the final node only.
+ * Strategy to use when resolving tree nodes internally.
  *
- * @public
+ * @private
  */
+const enum ResolverStrategy {
+    /**
+     * Return immediately when a node cannot be found.
+     * This is usually wanted when looking up an entry that might exist.
+     */
+    RETURN_ON_MISSING,
 
-(function (LookupStrategy) {
     /**
-     * Every node is considered to exist, regardless its value.
+     * Create missing nodes dynamically and continue.
+     * This is used when setting a new value that has non-existent middle nodes.
      */
-    LookupStrategy[LookupStrategy["EXISTENCE_BY_NODE"] = 0] = "EXISTENCE_BY_NODE";
-    /**
-     * Only nodes which have a non-nil value are considered existent.
-     */
-    LookupStrategy[LookupStrategy["EXISTENCE_BY_VALUE"] = 1] = "EXISTENCE_BY_VALUE";
-})(exports.LookupStrategy || (exports.LookupStrategy = {}));
+    CREATE_MISSING
+}
 
 /**
  * Helper method for parent result creation.
@@ -31,8 +32,11 @@ var lodash = require('lodash');
  * @param key Key used.
  * @return Parent lookup result.
  */
-const createParentResult = (previousNode, key) => {
-    if (lodash.isNil(previousNode)) {
+const createParentResult = <TKey, UValue>(
+    previousNode: TreeNode<TKey, UValue> | null,
+    key: TKey
+): LookupResultParent<TKey, UValue> | null => {
+    if (isNil(previousNode)) {
         return null;
     }
     return {
@@ -40,22 +44,27 @@ const createParentResult = (previousNode, key) => {
         key
     };
 };
+
 /**
  * Default implementation of a tree, using nested maps.
  *
  * @public
  * @class
  */
-class TreeNode {
+class TreeNode<TKey, UValue> {
+    private readonly paths: Map<TKey, TreeNode<TKey, UValue>>;
+    public value: UValue | null;
+
     /**
      * Creates a new instance with an optional value.
      *
      * @param value Value to instantiate the node with. If none is provided, null is set.
      */
-    constructor(value = null) {
+    public constructor(value: UValue | null = null) {
         this.value = value;
         this.paths = new Map();
     }
+
     /**
      * Checks if a given path exists in this tree.
      *
@@ -64,17 +73,26 @@ class TreeNode {
      * @param lookupStrategy Strategy to use. See {@link LookupStrategy} for details.
      * @return if the path exists, based on the strategy used.
      */
-    hasPath(path, lookupStrategy = exports.LookupStrategy.EXISTENCE_BY_NODE) {
+    public hasPath(
+        path: PathArr<TKey>,
+        lookupStrategy: LookupStrategy = LookupStrategy.EXISTENCE_BY_NODE
+    ): boolean {
         this.validatePath(path);
-        const lookupResult = this.resolvePath(path, 0 /* RETURN_ON_MISSING */);
-        if (lodash.isNil(lookupResult.node)) {
+
+        const lookupResult = this.resolvePath(
+            path,
+            ResolverStrategy.RETURN_ON_MISSING
+        );
+        if (isNil(lookupResult.node)) {
             return false;
         }
-        if (lookupStrategy === exports.LookupStrategy.EXISTENCE_BY_NODE) {
+
+        if (lookupStrategy === LookupStrategy.EXISTENCE_BY_NODE) {
             return true;
         }
-        return !lodash.isNil(lookupResult.node.value);
+        return !isNil(lookupResult.node.value);
     }
+
     /**
      * Gets a given path in this tree.
      *
@@ -82,10 +100,12 @@ class TreeNode {
      * @param path Path to get. May not be empty.
      * @return lookup result, containing details about which node was retrieved and what path was used.
      */
-    getPath(path) {
+    public getPath(path: PathArr<TKey>): LookupResult<TKey, UValue> {
         this.validatePath(path);
-        return this.resolvePath(path, 0 /* RETURN_ON_MISSING */);
+
+        return this.resolvePath(path, ResolverStrategy.RETURN_ON_MISSING);
     }
+
     /**
      * Sets a value for a given path.
      * Middle nodes will be created automatically.
@@ -94,12 +114,18 @@ class TreeNode {
      * @param path Path to set the value for. May not be empty.
      * @param value Value to set.
      */
-    setPath(path, value) {
+    public setPath(path: PathArr<TKey>, value: UValue): void {
         this.validatePath(path);
-        const lookupResult = this.resolvePath(path, 1 /* CREATE_MISSING */);
-        const node = lookupResult.node;
+
+        const lookupResult = this.resolvePath(
+            path,
+            ResolverStrategy.CREATE_MISSING
+        );
+        const node: TreeNode<TKey, UValue> = lookupResult.node!;
+
         node.value = value;
     }
+
     /**
      * Resolves the path against this tree.
      *
@@ -110,11 +136,16 @@ class TreeNode {
      * @param previousPath Only used for recursive calls. Path the resolving was delegated from.
      * @return Lookup result.
      */
-    resolvePath(path, resolverStrategy, previousNode = null, previousPath = []) {
+    private resolvePath(
+        path: PathArr<TKey>,
+        resolverStrategy: ResolverStrategy,
+        previousNode: TreeNode<TKey, UValue> | null = null,
+        previousPath: PathArr<TKey> = []
+    ): LookupResult<TKey, UValue> {
         const key = path[0];
-        let node;
+        let node: TreeNode<TKey, UValue>;
         if (!this.paths.has(key)) {
-            if (resolverStrategy !== 1 /* CREATE_MISSING */) {
+            if (resolverStrategy !== ResolverStrategy.CREATE_MISSING) {
                 return {
                     node: null,
                     parent: createParentResult(previousNode, key),
@@ -122,14 +153,16 @@ class TreeNode {
                     trailingPath: path
                 };
             }
-            node = new TreeNode();
+
+            node = new TreeNode<TKey, UValue>();
             this.paths.set(key, node);
+        } else {
+            node = this.paths.get(key)!;
         }
-        else {
-            node = this.paths.get(key);
-        }
+
         const previousPathNew = Array.from(previousPath);
         previousPathNew.push(key);
+
         if (path.length === 1) {
             return {
                 node,
@@ -138,21 +171,27 @@ class TreeNode {
                 trailingPath: []
             };
         }
+
         const nextPath = path.slice(1);
-        return node.resolvePath(nextPath, resolverStrategy, this, previousPathNew);
+        return node.resolvePath(
+            nextPath,
+            resolverStrategy,
+            this,
+            previousPathNew
+        );
     }
+
     /**
      * Validates a given path.
      *
      * @param path Path to check.
      * @private
      */
-    validatePath(path) {
-        if (lodash.isEmpty(path)) {
+    private validatePath(path: PathArr<TKey>): void {
+        if (isEmpty(path)) {
             throw new TypeError("Path may not be empty.");
         }
     }
 }
 
-exports.TreeNode = TreeNode;
-//# sourceMappingURL=quercus.common.js.map
+export { TreeNode };

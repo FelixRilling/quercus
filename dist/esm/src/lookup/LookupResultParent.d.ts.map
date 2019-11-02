@@ -1,0 +1,1 @@
+{"version":3,"file":"LookupResultParent.d.ts","sourceRoot":"","sources":["../../../../src/lookup/LookupResultParent.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,kBAAkB,CAAC;AAE5C;;;;GAIG;AACH,UAAU,kBAAkB,CAAC,IAAI,EAAE,MAAM;IACrC,QAAQ,CAAC,IAAI,EAAE,QAAQ,CAAC,IAAI,EAAE,MAAM,CAAC,CAAC;IACtC,QAAQ,CAAC,GAAG,EAAE,IAAI,CAAC;CACtB;AAED,OAAO,EAAE,kBAAkB,EAAE,CAAC"}

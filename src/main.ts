@@ -1,3 +1,6 @@
-import { Quercus } from "./Quercus";
+import { TreeNode } from "./tree/TreeNode";
+import { LookupResult } from "./lookup/LookupResult";
+import { LookupStrategy } from "./lookup/LookupStrategy";
+import { PathArr } from "./path/PathArr";
 
-export default Quercus;
+export { TreeNode, LookupResult, PathArr, LookupStrategy };

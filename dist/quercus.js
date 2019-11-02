@@ -1,192 +1,159 @@
-var Quercus = (function () {
+var Quercus = (function (exports, lodash) {
     'use strict';
 
     /**
-     * Resolves path through Quercus instances.
+     * Strategy to use when checking for a paths existence in a tree.
+     * The strategy is used to check the final node only.
      *
-     * @private
-     * @since 1.0.0
-     * @param {Tree} targetOld Starting target for resolving.
-     * @param {any[]} path Path to resolve.
-     * @param {boolean} [createMissing=false] If requested instances should be created if they don't exist.
-     * @returns {object} Resolved path object.
-     * @example
-     * const q = new Tree([["foo", "bar"], 5]);
-     *
-     * resolvePath(q, ["foo", "bar"])
-     * // => {target: Tree{"bar": 5}, key: "bar", success: true}
+     * @public
      */
-    const resolvePath = (targetOld, path, createMissing = false) => {
-        let target = targetOld;
-        let key = path[0];
-        let success = true;
-        if (path.length > 1) {
-            const sub = targetOld.get(key);
-            /*
-             * Does the key exist on the target?
-             *     true  -> Assign it
-             *     false ->
-             *         Is createMissing truthy?
-             *             true  -> Create a new Quercus, assign it and set it on the parent.
-             *             false -> Declare unsuccessful, abort.
-             */
-            if (targetOld.has(key) && targetOld.isTree(sub)) {
-                target = sub;
-            }
-            else {
-                if (createMissing) {
-                    target = targetOld.createSubTree();
-                    targetOld.set(key, target);
-                }
-                else {
-                    success = false;
-                }
-            }
-            // Assign the next key
-            key = path[1];
-        }
-        if (path.length > 2 && success) {
-            return resolvePath(target, path.slice(1), createMissing);
-        }
-        return { target, key, success };
-    };
+
+    (function (LookupStrategy) {
+        /**
+         * Every node is considered to exist, regardless its value.
+         */
+        LookupStrategy[LookupStrategy["EXISTENCE_BY_NODE"] = 0] = "EXISTENCE_BY_NODE";
+        /**
+         * Only nodes which have a non-nil value are considered existent.
+         */
+        LookupStrategy[LookupStrategy["EXISTENCE_BY_VALUE"] = 1] = "EXISTENCE_BY_VALUE";
+    })(exports.LookupStrategy || (exports.LookupStrategy = {}));
 
     /**
-     * Quercus main class.
+     * Helper method for parent result creation.
      *
-     * @class
-     * @since 1.0.0
-     * @extends Map
+     *
+     * @private
+     * @param previousNode Previous node.
+     * @param key Key used.
+     * @return Parent lookup result.
      */
-    class Quercus extends Map {
-        /**
-         * Quercus main constructor.
-         *
-         * @constructor
-         * @since 1.0.0
-         * @param {Array<Array<any>, any>} [pairArr=[]] Optional array of path-value pairs to init.
-         * @example
-         * // Empty tree
-         * const q = new Quercus();
-         *
-         * // Tree initialized with a path-value pair
-         * const q2 = new Quercus([["foo", bar], 5]);
-         */
-        constructor(pairArr = []) {
-            super();
-            for (const [path, val] of pairArr) {
-                this.setPath(path, val);
-            }
-        }
-        /**
-         * Checks if a given path exists.
-         *
-         * @since 1.0.0
-         * @param {any[]} path Path to check.
-         * @param {boolean} [quercusNodesAreTruthy=false] If nodes should be considered to be truthy.
-         * @returns {boolean} If the given path exists.
-         * @example
-         * const q = new Quercus([
-         *       [["foo", "bar"], 5],
-         *       [["foo", "bizz"], 12],
-         *       [["bar", "fazz"], 560]
-         *   ]);
-         *
-         * q.hasPath(["foo", "bar"]);
-         * // => true
-         *
-         * q.hasPath(["foo"]);
-         * // => false
-         *
-         * q.hasPath(["foo"], true);
-         * // => true
-         */
-        hasPath(path, quercusNodesAreTruthy = false) {
-            if (path.length === 0) {
-                return quercusNodesAreTruthy;
-            }
-            const { target, key, success } = resolvePath(this, path);
-            if (success && target.has(key)) {
-                if (!quercusNodesAreTruthy) {
-                    return !this.isTree(target.get(key));
-                }
-                return true;
-            }
-            return false;
-        }
-        /**
-         * Returns value of a given path.
-         *
-         * If the path could not be found, null is returned.
-         *
-         * @since 1.0.0
-         * @param {any[]} path Path to get.
-         * @returns {any|null} Value of the node, or null if it is not found.
-         * @example
-         * const q = new Quercus([
-         *       [["foo", "bar"], 5],
-         *       [["foo", "bizz"], 12],
-         *       [["bar", "fazz"], 560]
-         *   ]);
-         *
-         * q.getPath(["foo", "bar"]);
-         * // => 5
-         *
-         * q.getPath(["bar"]);
-         * // => Quercus{"fazz": 560}
-         *
-         * q.getPath(["lorem"]);
-         * // => null
-         */
-        getPath(path) {
-            if (path.length === 0) {
-                return this;
-            }
-            const { target, key, success } = resolvePath(this, path);
-            if (success && target.has(key)) {
-                return target.get(key);
-            }
+    const createParentResult = (previousNode, key) => {
+        if (lodash.isNil(previousNode)) {
             return null;
         }
+        return {
+            node: previousNode,
+            key
+        };
+    };
+    /**
+     * Default implementation of a tree, using nested maps.
+     *
+     * @public
+     * @class
+     */
+    class TreeNode {
         /**
-         * Sets value of a given path.
+         * Creates a new instance with an optional value.
          *
-         * If the given path is empty, null is returned.
-         * If the value was set successfully, the value's Node is returned.
-         *
-         * @since 1.0.0
-         * @param {any[]} path Path to set.
-         * @param {any} val Value to set.
-         * @returns {Quercus|null} Node that was set on, or null if it could not be set.
-         * @example
-         * const q = new Quercus();
-         *
-         * q.setPath(["foo", "bar"], 5);
-         * // => Quercus{"bar": 5}
-         *
-         * q.setPath(["bar", "fazz"], 560);
-         * // => Quercus{"fazz": 560}
-         *
-         * q.setPath([], "foo");
-         * // => null
+         * @param value Value to instantiate the node with. If none is provided, null is set.
          */
-        setPath(path, val) {
-            if (path.length === 0) {
-                return null;
+        constructor(value = null) {
+            this.value = value;
+            this.paths = new Map();
+        }
+        /**
+         * Checks if a given path exists in this tree.
+         *
+         * @public
+         * @param path Path to check for. May not be empty.
+         * @param lookupStrategy Strategy to use. See {@link LookupStrategy} for details.
+         * @return if the path exists, based on the strategy used.
+         */
+        hasPath(path, lookupStrategy = exports.LookupStrategy.EXISTENCE_BY_NODE) {
+            this.validatePath(path);
+            const lookupResult = this.resolvePath(path, 0 /* RETURN_ON_MISSING */);
+            if (lodash.isNil(lookupResult.node)) {
+                return false;
             }
-            const { target, key } = resolvePath(this, path, true);
-            target.set(key, val);
-            return target;
+            if (lookupStrategy === exports.LookupStrategy.EXISTENCE_BY_NODE) {
+                return true;
+            }
+            return !lodash.isNil(lookupResult.node.value);
         }
-        isTree(val) {
-            return val instanceof Quercus;
+        /**
+         * Gets a given path in this tree.
+         *
+         * @public
+         * @param path Path to get. May not be empty.
+         * @return lookup result, containing details about which node was retrieved and what path was used.
+         */
+        getPath(path) {
+            this.validatePath(path);
+            return this.resolvePath(path, 0 /* RETURN_ON_MISSING */);
         }
-        createSubTree() {
-            return new Quercus();
+        /**
+         * Sets a value for a given path.
+         * Middle nodes will be created automatically.
+         *
+         * @public
+         * @param path Path to set the value for. May not be empty.
+         * @param value Value to set.
+         */
+        setPath(path, value) {
+            this.validatePath(path);
+            const lookupResult = this.resolvePath(path, 1 /* CREATE_MISSING */);
+            const node = lookupResult.node;
+            node.value = value;
+        }
+        /**
+         * Resolves the path against this tree.
+         *
+         * @private
+         * @param path Path to resolve
+         * @param resolverStrategy Strategy to use for non-existent nodes.
+         * @param previousNode Only used for recursive calls. Node the resolving was delegated from.
+         * @param previousPath Only used for recursive calls. Path the resolving was delegated from.
+         * @return Lookup result.
+         */
+        resolvePath(path, resolverStrategy, previousNode = null, previousPath = []) {
+            const key = path[0];
+            let node;
+            if (!this.paths.has(key)) {
+                if (resolverStrategy !== 1 /* CREATE_MISSING */) {
+                    return {
+                        node: null,
+                        parent: createParentResult(previousNode, key),
+                        matchedPath: previousPath,
+                        trailingPath: path
+                    };
+                }
+                node = new TreeNode();
+                this.paths.set(key, node);
+            }
+            else {
+                node = this.paths.get(key);
+            }
+            const previousPathNew = Array.from(previousPath);
+            previousPathNew.push(key);
+            if (path.length === 1) {
+                return {
+                    node,
+                    parent: createParentResult(previousNode, key),
+                    matchedPath: previousPathNew,
+                    trailingPath: []
+                };
+            }
+            const nextPath = path.slice(1);
+            return node.resolvePath(nextPath, resolverStrategy, this, previousPathNew);
+        }
+        /**
+         * Validates a given path.
+         *
+         * @param path Path to check.
+         * @private
+         */
+        validatePath(path) {
+            if (lodash.isEmpty(path)) {
+                throw new TypeError("Path may not be empty.");
+            }
         }
     }
 
-    return Quercus;
+    exports.TreeNode = TreeNode;
 
-}());
+    return exports;
+
+}({}, _));
 //# sourceMappingURL=quercus.js.map
